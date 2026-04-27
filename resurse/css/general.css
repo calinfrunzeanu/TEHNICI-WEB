@@ -1,0 +1,331 @@
+/* =========================================
+   VARIABILE ȘI SETĂRI GENERALE
+========================================= */
+:root {
+  /* Culori */
+  --culoare-fundal: #FFF0E6;
+  --culoare-fundal-alt: #FFE2D1;
+  --culoare-contur: #BF7B61;
+  --culoare-primary: #ED2D07;
+  --culoare-secondary: #ED7E07;
+  --culoare-accent: #ED5407;
+  --culoare-light: #ffffff;
+  --culoare-dark: #000000;
+
+  /* Fonturi */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Nunito', Arial, sans-serif;
+  --font-size-base: 1rem;
+  --font-size-h1: 2.5rem;
+  --font-size-h2: 1.875rem;
+  --font-size-h3: 1.5rem;
+  --font-size-small: 0.875rem;
+  --line-height-base: 1.6;
+
+  /* Padding pagină */
+  --margine-pagina: 5rem;
+  --margine-pagina-tablet: 2rem;
+  --margine-pagina-mobile: 0.5rem;
+
+  /* Spațiere */
+  --gap-large: 1.5rem;
+  --gap-medium: 0.875rem;
+  --gap-small: 0.375rem;
+
+  /* Zone */
+  --zone-padding: 1.25rem;
+  --radius-zone: 0.625rem;
+  --radius-btn: 0.375rem;
+
+  /* Umbre */
+  --shadow-zone: 0 0.125rem 0.625rem rgba(0,0,0,0.16);
+  --shadow-btn: 0 0.125rem 0.375rem rgba(0,0,0,0.16);
+}
+
+/* =========================================
+   RESET ȘI SETĂRI DE BAZĂ
+========================================= */
+html {
+  font-size: 16px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--culoare-dark);
+  background-color: var(--culoare-light);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-left: var(--margine-pagina);
+  padding-right: var(--margine-pagina);
+}
+
+/* Tipografie */
+h1 { font-size: var(--font-size-h1); line-height: 1.2; font-family: var(--font-heading); color: var(--culoare-primary); }
+h2 { font-size: var(--font-size-h2); line-height: 1.3; font-family: var(--font-heading); color: var(--culoare-primary); margin-bottom: 0.75rem; }
+h3 { font-size: var(--font-size-h3); line-height: 1.4; font-family: var(--font-heading); color: var(--culoare-primary); margin-bottom: 0.5rem; }
+
+p { margin-bottom: 0.75em; }
+a { text-decoration: none; color: inherit; transition: color 0.2s ease; }
+
+/* Liste */
+ul, ol { list-style: none; }
+
+/* Media */
+img, video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* =========================================
+   GRID PENTRU PAGE-GRID
+========================================= */
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "zona1 zona1 zona1 zona1"
+    "zona2 zona2 zona3 zona3"
+    "zona2 zona2 zona4 zona4"
+    "zona5 zona6 zona6 zona7"
+    "zona8 zona8 zona8 zona8";
+  gap: var(--gap-large);
+  margin: var(--gap-large) 0;
+}
+
+.zone {
+  background-color: #fff2eb;
+  border: 1px solid #dd6639;
+  border-radius: var(--radius-zone);
+  box-shadow: var(--shadow-zone);
+  padding: var(--zone-padding);
+  min-width: 0; /* <--- ESENȚIAL PENTRU GRID: previne "spargerea" layout-ului */
+}
+
+.zone-1 { grid-area: zona1; }
+.zone-2 { grid-area: zona2; background-color: #ffe5d8; }
+.zone-3 { grid-area: zona3; }
+.zone-4 { grid-area: zona4; background-color: #ffe5d8; }
+.zone-5 { grid-area: zona5; }
+.zone-6 { grid-area: zona6; background-color: #ffe5d8; }
+.zone-7 { grid-area: zona7; }
+.zone-8 { grid-area: zona8; background-color: #ffe5d8; }
+
+/* =========================================
+   COMPONENTE TABEL (REPARATĂ)
+========================================= */
+.table-wrapper {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto; /* Activează scroll-ul orizontal */
+  overflow-y: hidden;
+  border-radius: var(--radius-zone);
+  margin-bottom: 1rem;
+  -webkit-overflow-scrolling: touch; /* Pentru scroll fin pe telefoane */
+}
+
+/* Stil pentru scrollbar-ul orizontal */
+.table-wrapper::-webkit-scrollbar {
+  height: 12px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--culoare-accent);
+  border-radius: 6px;
+  border: 2px solid var(--culoare-fundal-alt); /* Oferă un contur frumos */
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: var(--culoare-fundal-alt);
+  border-radius: 6px;
+}
+
+.main-table {
+  border-collapse: collapse; /* Cerința: borderele vecine suprapuse */
+  width: max-content; 
+  min-width: 100%; 
+  border: 5px double var(--culoare-contur); /* Cerința: border dublu de minim 5px în jur */
+}
+
+.main-table thead tr {
+  background-color: var(--culoare-primary);
+  color: var(--culoare-light);
+}
+
+.main-table th, .main-table td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--culoare-contur); /* Cerința: border 1px la celule */
+  text-align: left;
+  min-width: 150px; 
+  word-wrap: break-word;
+  transition: all 0.75s ease; /* Cerința: tranziția durează 3 sferturi de secundă (0.75s) */
+}
+
+/* Cerința: Culori alternate doar pentru TEXTUL de pe coloane */
+.main-table tbody td:nth-child(even) {
+  color: var(--culoare-dark); /* c1: Culoare pentru coloanele pare */
+}
+
+.main-table tbody td:nth-child(odd) {
+  color: var(--culoare-primary); /* c2: Culoare pentru coloanele impare */
+}
+
+/* Cerința: Hover pe rând - schimbă fundal, text și crește border-ul la 5px */
+.main-table tbody tr:hover td {
+  background-color: var(--culoare-accent) !important; /* Schimbare background */
+  color: var(--culoare-light) !important; /* Schimbare text */
+  border-width: 5px; /* Creșterea grosimii borderului */
+  border-style: solid;
+  border-color: var(--culoare-primary);
+}
+
+/* =========================================
+   CALENDAR & ALTE ELEMENTE
+========================================= */
+.calendar {
+  max-height: 26.25rem;
+  overflow-y: auto;
+  padding: 1rem;
+  background: linear-gradient(180deg, var(--culoare-fundal), var(--culoare-fundal-alt));
+  border: 2px solid var(--culoare-contur);
+  border-radius: var(--radius-zone);
+}
+
+.formula-box math {
+  font-size: 1.75rem;
+  display: block;
+  margin: 1.5rem auto;
+  text-align: center;
+}
+
+/* =========================================
+   IFRAME TABS (RESTAURAT EXACT CUM ERA)
+========================================= */
+.video-faq-container {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.container-iframe {
+  flex: 2;
+  max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+.taburi-iframe {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  border: 1px solid var(--culoare-contur);
+}
+
+.taburi-iframe a {
+  display: flex;
+  padding: 0.625rem 0.9375rem;
+  margin: 0.3125rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--culoare-light);
+  background-color: #ED7E07;
+  border: 2px solid #dd6639;
+  border-radius: var(--radius-btn);
+  width: 12.5rem;
+  height: 3.5rem;
+  text-align: center;
+  word-wrap: break-word;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.taburi-iframe a:hover {
+  background-color: #ED5407;
+}
+
+iframe {
+  flex: 1;
+  max-width: 62.5rem;
+  max-height: 125.9375rem;
+}
+
+iframe:not([name="ifr-video"]):not(.tab-iframe):not(.map-embed) {
+  width: 100%;
+  max-width: 800px;
+  height: 400px;
+  display: block;
+}
+
+/* =========================================
+   RESPONSIVE - CELE DOUĂ ZONE DE CONTROL
+========================================= */
+
+/* 1. TABLETE ȘI ECRANE MICI (Sub 1024px) */
+@media (max-width: 1023px) {
+  body {
+    padding-left: var(--margine-pagina-tablet);
+    padding-right: var(--margine-pagina-tablet);
+  }
+
+  .page-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "zona1 zona1"
+      "zona2 zona3"
+      "zona2 zona4"
+      "zona5 zona6"
+      "zona7 zona8";
+    gap: var(--gap-medium);
+  }
+
+  /* Optimizări vizuale pentru mobil */
+  *, *::before, *::after {
+    transition: none !important;
+  }
+}
+
+/* 2. TELEFOANE MOBILE (Sub 600px) */
+@media (max-width: 599px) {
+  html { font-size: 14px; }
+
+  body {
+    padding-left: var(--margine-pagina-mobile);
+    padding-right: var(--margine-pagina-mobile);
+  }
+
+  .page-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "zona1" "zona2" "zona3" "zona4"
+      "zona5" "zona6" "zona7" "zona8";
+    gap: var(--gap-small);
+  }
+
+  iframe, img, video {
+    height: auto;
+    min-height: 200px;
+  }
+}
+
+/* FORȚARE CULOARE ALBASTRĂ PENTRU LINKURILE DE JOS */
+footer a,
+.footer a,
+.zone-7 a,
+.zone-8 a {
+  color: blue !important;
+}
