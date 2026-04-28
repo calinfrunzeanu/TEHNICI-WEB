@@ -1,0 +1,84 @@
+/* =========================================
+   RESET CSS (Complet)
+========================================= */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  box-sizing: border-box;
+}
+
+/* Setări de bază conform cerinței: HTML și BODY cu unități fixe (px) */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  padding-left: var(--margine-pagina);
+  padding-right: var(--margine-pagina);
+  
+
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  
+  font-size: 16px;
+  line-height: var(--line-height-base, 1.6);
+  color: var(--culoare-dark, #000000);
+  background-color: var(--culoare-light, #ffffff);
+}
+
+/* Redefinire liste folosind unități relative (rem/em) și culori din variabile */
+ul, ol {
+  padding-left: 1.5rem; /* Unitate relativă */
+}
+ul li {
+  list-style-type: square;
+  color: var(--culoare-dark);
+}
+ol li {
+  list-style-type: decimal;
+}
+
+/* Redefinire bold și italic */
+strong, b {
+  font-weight: bold;
+  color: var(--culoare-accent); /* Folosire variabilă */
+}
+em, i {
+  font-style: italic;
+  color: var(--culoare-secondary);
+}
+
+/* Redefinire tabele cu unități relative */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+th, td {
+  padding: 0.5rem; /* Unitate relativă */
+}
+
+/* Imagini și video responsive by default */
+img, video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

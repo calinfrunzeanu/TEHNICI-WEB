@@ -1,8 +1,6 @@
-/* =========================================
-   VARIABILE ȘI SETĂRI GENERALE
-========================================= */
+
 :root {
-  /* Culori */
+ 
   --culoare-fundal: #FFF0E6;
   --culoare-fundal-alt: #FFE2D1;
   --culoare-contur: #BF7B61;
@@ -12,7 +10,6 @@
   --culoare-light: #ffffff;
   --culoare-dark: #000000;
 
-  /* Fonturi */
   --font-heading: 'Playfair Display', Georgia, serif;
   --font-body: 'Nunito', Arial, sans-serif;
   --font-size-base: 1rem;
@@ -22,47 +19,24 @@
   --font-size-small: 0.875rem;
   --line-height-base: 1.6;
 
-  /* Padding pagină */
   --margine-pagina: 5rem;
   --margine-pagina-tablet: 2rem;
   --margine-pagina-mobile: 0.5rem;
 
-  /* Spațiere */
   --gap-large: 1.5rem;
   --gap-medium: 0.875rem;
   --gap-small: 0.375rem;
 
-  /* Zone */
   --zone-padding: 1.25rem;
   --radius-zone: 0.625rem;
   --radius-btn: 0.375rem;
 
-  /* Umbre */
   --shadow-zone: 0 0.125rem 0.625rem rgba(0,0,0,0.16);
   --shadow-btn: 0 0.125rem 0.375rem rgba(0,0,0,0.16);
 }
 
-/* =========================================
-   RESET ȘI SETĂRI DE BAZĂ
-========================================= */
-html {
-  font-size: 16px;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
-
-*, *::before, *::after {
-  box-sizing: inherit;
-  margin: 0;
-  padding: 0;
-}
-
 body {
   font-family: var(--font-body);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-  color: var(--culoare-dark);
-  background-color: var(--culoare-light);
   min-height: 100vh;
   overflow-x: hidden;
   padding-left: var(--margine-pagina);
@@ -87,9 +61,6 @@ img, video {
   height: auto;
 }
 
-/* =========================================
-   GRID PENTRU PAGE-GRID
-========================================= */
 .page-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -109,7 +80,7 @@ img, video {
   border-radius: var(--radius-zone);
   box-shadow: var(--shadow-zone);
   padding: var(--zone-padding);
-  min-width: 0; /* <--- ESENȚIAL PENTRU GRID: previne "spargerea" layout-ului */
+  min-width: 0; 
 }
 
 .zone-1 { grid-area: zona1; }
@@ -121,21 +92,18 @@ img, video {
 .zone-7 { grid-area: zona7; }
 .zone-8 { grid-area: zona8; background-color: #ffe5d8; }
 
-/* =========================================
-   COMPONENTE TABEL (REPARATĂ)
-========================================= */
+
 .table-wrapper {
   display: block;
   width: 100%;
   max-width: 100%;
-  overflow-x: auto; /* Activează scroll-ul orizontal */
+  overflow-x: auto; 
   overflow-y: hidden;
   border-radius: var(--radius-zone);
   margin-bottom: 1rem;
-  -webkit-overflow-scrolling: touch; /* Pentru scroll fin pe telefoane */
+  -webkit-overflow-scrolling: touch; 
 }
 
-/* Stil pentru scrollbar-ul orizontal */
 .table-wrapper::-webkit-scrollbar {
   height: 12px;
 }
@@ -143,7 +111,7 @@ img, video {
 .table-wrapper::-webkit-scrollbar-thumb {
   background-color: var(--culoare-accent);
   border-radius: 6px;
-  border: 2px solid var(--culoare-fundal-alt); /* Oferă un contur frumos */
+  border: 2px solid var(--culoare-fundal-alt); 
 }
 
 .table-wrapper::-webkit-scrollbar-track {
@@ -152,10 +120,10 @@ img, video {
 }
 
 .main-table {
-  border-collapse: collapse; /* Cerința: borderele vecine suprapuse */
+  border-collapse: collapse; 
   width: max-content; 
   min-width: 100%; 
-  border: 5px double var(--culoare-contur); /* Cerința: border dublu de minim 5px în jur */
+  border: 5px double var(--culoare-contur); 
 }
 
 .main-table thead tr {
@@ -165,34 +133,31 @@ img, video {
 
 .main-table th, .main-table td {
   padding: 0.75rem 1rem;
-  border: 1px solid var(--culoare-contur); /* Cerința: border 1px la celule */
+  border: 1px solid var(--culoare-contur); 
   text-align: left;
   min-width: 150px; 
   word-wrap: break-word;
-  transition: all 0.75s ease; /* Cerința: tranziția durează 3 sferturi de secundă (0.75s) */
+  transition: all 0.75s ease; 
 }
 
-/* Cerința: Culori alternate doar pentru TEXTUL de pe coloane */
+
 .main-table tbody td:nth-child(even) {
-  color: var(--culoare-dark); /* c1: Culoare pentru coloanele pare */
+  color: var(--culoare-dark); 
 }
 
 .main-table tbody td:nth-child(odd) {
-  color: var(--culoare-primary); /* c2: Culoare pentru coloanele impare */
+  color: var(--culoare-primary); 
 }
 
-/* Cerința: Hover pe rând - schimbă fundal, text și crește border-ul la 5px */
 .main-table tbody tr:hover td {
-  background-color: var(--culoare-accent) !important; /* Schimbare background */
-  color: var(--culoare-light) !important; /* Schimbare text */
-  border-width: 5px; /* Creșterea grosimii borderului */
+  background-color: var(--culoare-accent) !important; 
+  color: var(--culoare-light) !important; 
+  border-width: 5px; 
   border-style: solid;
   border-color: var(--culoare-primary);
 }
 
-/* =========================================
-   CALENDAR & ALTE ELEMENTE
-========================================= */
+
 .calendar {
   max-height: 26.25rem;
   overflow-y: auto;
@@ -202,16 +167,42 @@ img, video {
   border-radius: var(--radius-zone);
 }
 
+
 .formula-box math {
   font-size: 1.75rem;
   display: block;
   margin: 1.5rem auto;
   text-align: center;
+  background-color: var(--culoare-light);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px dashed var(--culoare-secondary);
 }
 
-/* =========================================
-   IFRAME TABS (RESTAURAT EXACT CUM ERA)
-========================================= */
+
+.formula-box mi {
+  color: var(--culoare-primary);
+  font-style: italic;
+  font-weight: 700;
+}
+
+.formula-box mn {
+  color: var(--culoare-accent);
+  font-weight: bold;
+  font-size: 1.1em; 
+}
+
+.formula-box mo {
+  color: var(--culoare-dark);
+  padding: 0 0.3rem; 
+}
+
+
+.formula-box mfrac {
+  font-size: 0.85em; 
+}
+
+
 .video-faq-container {
   display: flex;
   gap: 1.25rem;
@@ -271,11 +262,6 @@ iframe:not([name="ifr-video"]):not(.tab-iframe):not(.map-embed) {
   display: block;
 }
 
-/* =========================================
-   RESPONSIVE - CELE DOUĂ ZONE DE CONTROL
-========================================= */
-
-/* 1. TABLETE ȘI ECRANE MICI (Sub 1024px) */
 @media (max-width: 1023px) {
   body {
     padding-left: var(--margine-pagina-tablet);
@@ -293,13 +279,11 @@ iframe:not([name="ifr-video"]):not(.tab-iframe):not(.map-embed) {
     gap: var(--gap-medium);
   }
 
-  /* Optimizări vizuale pentru mobil */
   *, *::before, *::after {
     transition: none !important;
   }
 }
 
-/* 2. TELEFOANE MOBILE (Sub 600px) */
 @media (max-width: 599px) {
   html { font-size: 14px; }
 
@@ -322,7 +306,7 @@ iframe:not([name="ifr-video"]):not(.tab-iframe):not(.map-embed) {
   }
 }
 
-/* FORȚARE CULOARE ALBASTRĂ PENTRU LINKURILE DE JOS */
+
 footer a,
 .footer a,
 .zone-7 a,
