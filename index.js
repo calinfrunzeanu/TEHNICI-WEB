@@ -523,6 +523,7 @@ $timp_total: ${timpTotal}s;
     top: 0; left: 0; width: 100%; height: 100%;
     margin: 0;
     transform-origin: center right; // Pivotul pe centru-dreapta
+    transition: clip-path 0.3s ease;
     animation: animatieGalerie $timp_total linear infinite;
     animation-fill-mode: both;
     
@@ -552,30 +553,28 @@ $timp_total: ${timpTotal}s;
 }
 
 @keyframes animatieGalerie {
+  /* 0% - Vizibilă complet */
   0%, ${procVizibil}% {
-    // Imaginea stă normal
-    transform: scale(1) rotate(0deg) translate(0, 0);
-    z-index: 10;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
+  /* Turtire către mijloc folosind clip-path */
   ${procTurtire}% {
-    // 1. Turtire către centru (scaleY mic)
-    // 2. Pivotul rămâne pe centru
-    transform: scaleY(0.2) scaleX(1) rotate(0deg) translate(0, 0);
-    z-index: 10;
+    clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
+    transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
+  /* Ieșire prin rotire spre dreapta */
   ${procIesire}% {
-    // 1. Rotire față de axa centrată mijloc-dreapta
-    // 2. translate(150%, 0) ajută la ieșirea spre dreapta
-    transform: scaleY(0.2) rotate(90deg) translate(150%, 0);
-    z-index: 5;
+    clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
+    transform: rotate(90deg) translate(100%, 0);
     opacity: 0;
   }
+  /* Reset */
   ${procIesire + 0.001}%, 100% {
-    // Reset invizibil
-    transform: scale(1) rotate(0deg) translate(0, 0);
-    z-index: -10;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: rotate(0deg) translate(0, 0);
     opacity: 0;
   }
 }
