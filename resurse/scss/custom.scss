@@ -49,11 +49,9 @@ $enable-gradients: true;
 // ═══════════════════════════════════════════════════════════════════════
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
-// ═══════════════════════════════════════════════════════════════════════
-// EFECTE CSS SUPLIMENTARE (Etapa 5)
-// ═══════════════════════════════════════════════════════════════════════
+// efecte css
 
-// 1. Reflexie (cerință individuală - OY)
+// reflexie logo
 .logo-reflexie {
   position: relative;
   display: inline-flex;
@@ -70,7 +68,7 @@ $enable-gradients: true;
 
   .reflexie-text {
     position: absolute;
-    left: calc(100% + 20px); // reflexia la dreapta
+    left: calc(100% + 20px); // dreapta
     top: 0;
     transform: scaleX(-1);
     opacity: 0.35;
@@ -86,7 +84,7 @@ $enable-gradients: true;
   }
 }
 
-// 2. Stilizare <hr> (efect-css-stilizare-hr)
+// hr stilizat
 hr.custom-hr {
   border: none;
   height: 4px;
@@ -119,7 +117,7 @@ hr.custom-hr {
   }
 }
 
-// 3. Scrierea textului pe coloane (column-count)
+// text pe coloane
 .text-coloane {
   column-count: 2;
   column-rule: 2px dotted $primary;
@@ -130,13 +128,13 @@ hr.custom-hr {
   }
 }
 
-// 4. Schimbarea afișării implicite a textului selectat (::selection)
+// selectie text
 ::selection {
   background-color: $primary;
   color: $light;
 }
 
-// 5. Efect Duotone (0.05p)
+// efect duotone
 .imagine-duotone {
   width: 100%;
   max-width: 450px;
@@ -164,16 +162,16 @@ hr.custom-hr {
   transition: opacity 0.5s ease-in-out;
 }
 
-/* STRATUL 1: Culoarea DESCHISĂ (Luminile) */
+/* strat lumini */
 .imagine-duotone::before {
-  background-color: #00ffff; /* Turcoaz */
-  mix-blend-mode: multiply;  /* OBLIGATORIU multiply pentru culoarea deschisă */
+  background-color: #00ffff; /* turcoaz */
+  mix-blend-mode: multiply;
 }
 
-/* STRATUL 2: Culoarea ÎNCHISĂ (Umbrele) */
+/* strat umbre */
 .imagine-duotone::after {
-  background-color: #0000ff; /* Albastru */
-  mix-blend-mode: screen;    /* OBLIGATORIU screen pentru culoarea închisă */
+  background-color: #0000ff; /* albastru */
+  mix-blend-mode: screen;
 }
 
 .imagine-duotone:hover {

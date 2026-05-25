@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .galerie-animata-container {
   width: 450px;
   height: 350px;
@@ -14,8 +15,9 @@
   width: 100%;
   height: 100%;
   margin: 0;
-  transform-origin: bottom left;
-  animation: animatieGalerie 33s linear infinite;
+  transform-origin: center left;
+  transition: clip-path 0.3s ease;
+  animation: animatieGalerie 21s linear infinite;
   animation-fill-mode: both;
 }
 .galerie-animata-container figure img {
@@ -33,58 +35,50 @@
   padding: 0.5rem;
 }
 .galerie-animata-container figure:nth-child(1) {
-  animation-delay: 30s;
-}
-.galerie-animata-container figure:nth-child(2) {
-  animation-delay: 27s;
-}
-.galerie-animata-container figure:nth-child(3) {
-  animation-delay: 24s;
-}
-.galerie-animata-container figure:nth-child(4) {
-  animation-delay: 21s;
-}
-.galerie-animata-container figure:nth-child(5) {
   animation-delay: 18s;
 }
-.galerie-animata-container figure:nth-child(6) {
+.galerie-animata-container figure:nth-child(2) {
   animation-delay: 15s;
 }
-.galerie-animata-container figure:nth-child(7) {
+.galerie-animata-container figure:nth-child(3) {
   animation-delay: 12s;
 }
-.galerie-animata-container figure:nth-child(8) {
+.galerie-animata-container figure:nth-child(4) {
   animation-delay: 9s;
 }
-.galerie-animata-container figure:nth-child(9) {
+.galerie-animata-container figure:nth-child(5) {
   animation-delay: 6s;
 }
-.galerie-animata-container figure:nth-child(10) {
+.galerie-animata-container figure:nth-child(6) {
   animation-delay: 3s;
 }
-.galerie-animata-container figure:nth-child(11) {
+.galerie-animata-container figure:nth-child(7) {
   animation-delay: 0s;
 }
 
 @keyframes animatieGalerie {
-  0%, 9.090909090909092% {
-    transform: scaleY(1) rotate(0deg) translate(0, 0);
-    z-index: 10;
+  /* 0% - Vizibilă complet */
+  0%, 14.285714285714285% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
-  10.606060606060607% {
-    transform: scaleY(0.1) rotate(0deg) translate(0, 0);
-    z-index: 10;
+  /* Turtire către mijloc folosind clip-path */
+  16.666666666666664% {
+    clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
+    transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
-  12.121212121212121% {
-    transform: scaleY(0.1) rotate(45deg) translate(-200%, 200%);
-    z-index: -10;
+  /* Ieșire prin rotire spre dreapta */
+  19.047619047619047% {
+    clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
+    transform: rotate(-90deg) translate(-50%, 0);
     opacity: 0;
   }
-  12.12221212121212%, 100% {
-    transform: scaleY(1) rotate(0deg) translate(0, 0);
-    z-index: -10;
+  /* Reset */
+  19.04861904761905%, 100% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: rotate(0deg) translate(0, 0);
     opacity: 0;
   }
 }

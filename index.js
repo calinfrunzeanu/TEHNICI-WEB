@@ -46,12 +46,12 @@ function compileazaScss(caleScss, caleCss) {
     absCss = path.isAbsolute(caleCss) ? caleCss : path.join(global.folderCss, caleCss);
   }
 
-  // 2. Copiere în backup înainte de compilare/suprascriere
+  // backup css
   if (fs.existsSync(absCss) && !path.basename(absCss).startsWith("galerie_animata")) {
     const backupDir = path.join(__dirname, "backup", "resurse", "css");
     const extensie = path.extname(absCss);
     const numeBaza = path.basename(absCss, extensie);
-    const timestamp = new Date().getTime(); // ex: 1681124489791
+    const timestamp = new Date().getTime();
     const numeBackup = `${numeBaza}_${timestamp}${extensie}`;
     const destBackup = path.join(backupDir, numeBackup);
 
@@ -93,7 +93,7 @@ if (fs.existsSync(global.folderScss)) {
   });
 }
 
-// Urmărire modificări în timp real (compilare pe parcurs)
+// compilare automata la modificari
 if (fs.existsSync(global.folderScss)) {
   fs.watch(global.folderScss, (eventType, filename) => {
     if (filename && path.extname(filename) === ".scss") {
@@ -302,23 +302,20 @@ function initGalerie() {
   }
   obGlobal.obGalerie = JSON.parse(fs.readFileSync(cale, "utf-8"));
 
-  // ═════════════════ BONUS 5: Verificare JSON ═════════════════
-  // 1. Verificăm dacă folderul cale_galerie există
+  // verificare date galerie
   var folderGaleriePath = path.join(__dirname, obGlobal.obGalerie.cale_galerie.replace(/^\//, ""));
 
   if (!fs.existsSync(folderGaleriePath)) {
-    console.error("[EROARE BONUS 5] Folderul specificat in cale_galerie NU există: " + folderGaleriePath);
+    console.error("[EROARE GALERIE] Folderul nu exista: " + folderGaleriePath);
   } else {
-    // 2. Verificăm dacă fiecare imagine există în folder
     obGlobal.obGalerie.imagini.forEach(function (img) {
       var caleImagineCurenta = path.join(folderGaleriePath, img.cale_imagine);
 
       if (!fs.existsSync(caleImagineCurenta)) {
-        console.error("[EROARE BONUS 5] Imaginea '" + img.cale_imagine + "' specificata in galerie.json NU există pe disc la calea: " + caleImagineCurenta);
+        console.error("[EROARE IMAGINE] Imaginea nu exista: " + caleImagineCurenta);
       }
     });
   }
-  // ════════════════════════════════════════════════════════════
 
   console.log("[GALERIE] incarcat: " + obGlobal.obGalerie.imagini.length + " imagini");
 }
@@ -475,35 +472,34 @@ app.use("/resurse", function (req, res, next) {
 app.use("/resurse", express.static(path.join(__dirname, "resurse")));
 
 app.use((req, res, next) => {
-  // Rulăm logica doar când se încarcă paginile principale
+  // doar pe paginile principale
   if (req.method === 'GET' && (req.path === '/' || req.path === '/index' || req.path === '/home')) {
     
-    // Guard în caz că nu s-a inițializat galeria
+    // guard
     if (!obGlobal.obGalerie || !obGlobal.obGalerie.imagini) {
       return next();
     }
 
-    // 1. Alegem un număr aleator între 7 și 11, dar diferit de 10
+    // selectam numar imagini
     const optiuniN = [7, 8, 9, 11];
     const N = optiuniN[Math.floor(Math.random() * optiuniN.length)];
 
-    // 2. Extragem N imagini distincte amestecate din JSON
+    // imagini amestecate
     let imaginiGalerie = [...obGlobal.obGalerie.imagini];
-    imaginiGalerie.sort(() => 0.5 - Math.random()); // amestecăm elementele
+    imaginiGalerie.sort(() => 0.5 - Math.random());
     res.locals.imaginiGalerieAnimata = imaginiGalerie.slice(0, N);
     res.locals.caleGalerieAnimata = obGlobal.obGalerie.cale_galerie;
 
-    // 3. Calculăm procentele pentru animația SASS
-    let timpCadru = 3; // O imagine stă vizibilă 3 secunde
-    let timpTranzitie = 1; // 1 secundă durează animația de ieșire
+    // procente animatie
+    let timpCadru = 3;
+    let timpTranzitie = 1;
     let timpTotal = N * timpCadru;
     
-    // Regula de 3 simplă pentru a afla procentele keyframes-urilor
     let procVizibil = (timpCadru / timpTotal) * 100;
-    let procTurtire = procVizibil + ((timpTranzitie / 2) / timpTotal) * 100; // Jumătatea tranziției
+    let procTurtire = procVizibil + ((timpTranzitie / 2) / timpTotal) * 100;
     let procIesire = ((timpCadru + timpTranzitie) / timpTotal) * 100;
 
-    // 4. Generăm string-ul SCSS dinamic
+    // generator scss
     let continutScss = `
 $n: ${N};
 $timp_total: ${timpTotal}s;
@@ -515,14 +511,14 @@ $timp_total: ${timpTotal}s;
   overflow: hidden;
   margin: 2rem auto;
   border: 20px solid transparent;
-  // Border-image cu o imagine deja existentă la tine în proiect
+  // border imagine
   border-image: url('../imagini/mapa.png') 30 stretch; 
   
   figure {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     margin: 0;
-    transform-origin: center left; // Pivotul pe centru-stânga
+    transform-origin: center left; // pivot
     transition: clip-path 0.3s ease;
     animation: animatieGalerie $timp_total linear infinite;
     animation-fill-mode: both;
@@ -544,7 +540,7 @@ $timp_total: ${timpTotal}s;
     }
   }
 
-  // Staggering dinamic (folosind clauza @for din SASS) pentru "N" imagini
+  // staggering
   @for $i from 1 through $n {
     figure:nth-child(#{$i}) {
       animation-delay: #{($n - $i) * ${timpCadru}}s;
@@ -553,25 +549,25 @@ $timp_total: ${timpTotal}s;
 }
 
 @keyframes animatieGalerie {
-  /* 0% - Vizibilă complet */
+  /* vizibil */
   0%, ${procVizibil}% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
-  /* Turtire către mijloc folosind clip-path */
+  /* turtire */
   ${procTurtire}% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
     transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
-  /* Ieșire prin rotire spre dreapta */
+  /* rotire stanga */
   ${procIesire}% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
     transform: rotate(-90deg) translate(-50%, 0);
     opacity: 0;
   }
-  /* Reset */
+  /* reset */
   ${procIesire + 0.001}%, 100% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     transform: rotate(0deg) translate(0, 0);
@@ -579,11 +575,9 @@ $timp_total: ${timpTotal}s;
   }
 }
 `;
-    // 5. Salvăm fișierul SCSS și îl compilăm pe loc
+    // scriere si compilare scss
     const caleScssDinamic = path.join(global.folderScss, "galerie_animata.scss");
     fs.writeFileSync(caleScssDinamic, continutScss, "utf-8");
-    
-    // Ne folosim exact de funcția ta deja implementată!
     compileazaScss("galerie_animata.scss");
   }
   next();

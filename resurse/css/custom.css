@@ -12014,16 +12014,16 @@ hr.custom-hr::after {
   transition: opacity 0.5s ease-in-out;
 }
 
-/* STRATUL 1: Culoarea DESCHISĂ (Luminile) */
+/* strat lumini */
 .imagine-duotone::before {
-  background-color: #00ffff; /* Turcoaz */
-  mix-blend-mode: multiply; /* OBLIGATORIU multiply pentru culoarea deschisă */
+  background-color: #00ffff; /* turcoaz */
+  mix-blend-mode: multiply;
 }
 
-/* STRATUL 2: Culoarea ÎNCHISĂ (Umbrele) */
+/* strat umbre */
 .imagine-duotone::after {
-  background-color: #0000ff; /* Albastru */
-  mix-blend-mode: screen; /* OBLIGATORIU screen pentru culoarea închisă */
+  background-color: #0000ff; /* albastru */
+  mix-blend-mode: screen;
 }
 
 .imagine-duotone:hover {
