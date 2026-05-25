@@ -522,7 +522,7 @@ $timp_total: ${timpTotal}s;
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     margin: 0;
-    transform-origin: center right; // Pivotul pe centru-dreapta
+    transform-origin: center left; // Pivotul pe centru-stânga
     transition: clip-path 0.3s ease;
     animation: animatieGalerie $timp_total linear infinite;
     animation-fill-mode: both;
@@ -568,7 +568,7 @@ $timp_total: ${timpTotal}s;
   /* Ieșire prin rotire spre dreapta */
   ${procIesire}% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
-    transform: rotate(90deg) translate(100%, 0);
+    transform: rotate(-90deg) translate(-50%, 0);
     opacity: 0;
   }
   /* Reset */
