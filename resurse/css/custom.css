@@ -11986,3 +11986,49 @@ hr.custom-hr::after {
   background-color: #e25b45;
   color: #fff3e0;
 }
+
+.imagine-duotone {
+  width: 100%;
+  max-width: 450px;
+  aspect-ratio: 16/9;
+  background-image: url("/resurse/imagini/galerie/pisica_persana.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: filter 0.5s ease-in-out;
+  filter: grayscale(0%);
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.imagine-duotone::before,
+.imagine-duotone::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.imagine-duotone::before {
+  background-color: #0000ff; /* Albastru */
+  mix-blend-mode: multiply;
+}
+
+.imagine-duotone::after {
+  background-color: #00ffff; /* Cyan */
+  mix-blend-mode: screen;
+}
+
+.imagine-duotone:hover {
+  filter: grayscale(100%);
+}
+
+.imagine-duotone:hover::before,
+.imagine-duotone:hover::after {
+  opacity: 0;
+}
