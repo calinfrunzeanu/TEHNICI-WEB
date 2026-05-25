@@ -12014,15 +12014,13 @@ hr.custom-hr::after {
   transition: opacity 0.5s ease-in-out;
 }
 
-/* strat lumini */
 .imagine-duotone::before {
-  background-color: #00ffff; /* turcoaz */
+  background-color: #00ffff;
   mix-blend-mode: multiply;
 }
 
-/* strat umbre */
 .imagine-duotone::after {
-  background-color: #0000ff; /* albastru */
+  background-color: #0000ff;
   mix-blend-mode: screen;
 }
 

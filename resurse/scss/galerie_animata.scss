@@ -9,14 +9,13 @@ $timp_total: 21s;
   overflow: hidden;
   margin: 2rem auto;
   border: 20px solid transparent;
-  // Border-image cu o imagine deja existentă la tine în proiect
   border-image: url('../imagini/mapa.png') 30 stretch; 
   
   figure {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     margin: 0;
-    transform-origin: center left; // Pivotul pe centru-stânga
+    transform-origin: center left;
     transition: clip-path 0.3s ease;
     animation: animatieGalerie $timp_total linear infinite;
     animation-fill-mode: both;
@@ -38,7 +37,6 @@ $timp_total: 21s;
     }
   }
 
-  // Staggering dinamic (folosind clauza @for din SASS) pentru "N" imagini
   @for $i from 1 through $n {
     figure:nth-child(#{$i}) {
       animation-delay: #{($n - $i) * 3}s;
@@ -47,25 +45,21 @@ $timp_total: 21s;
 }
 
 @keyframes animatieGalerie {
-  /* 0% - Vizibilă complet */
   0%, 14.285714285714285% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
-  /* Turtire către mijloc folosind clip-path */
   16.666666666666664% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
     transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
-  /* Ieșire prin rotire spre dreapta */
   19.047619047619047% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
     transform: rotate(-90deg) translate(-50%, 0);
     opacity: 0;
   }
-  /* Reset */
   19.04861904761905%, 100% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     transform: rotate(0deg) translate(0, 0);

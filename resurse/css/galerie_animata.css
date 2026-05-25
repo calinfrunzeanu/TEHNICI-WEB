@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .galerie-animata-container {
   width: 450px;
   height: 350px;
@@ -57,25 +56,21 @@
 }
 
 @keyframes animatieGalerie {
-  /* 0% - Vizibilă complet */
   0%, 14.285714285714285% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
-  /* Turtire către mijloc folosind clip-path */
   16.666666666666664% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
     transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
-  /* Ieșire prin rotire spre dreapta */
   19.047619047619047% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
     transform: rotate(-90deg) translate(-50%, 0);
     opacity: 0;
   }
-  /* Reset */
   19.04861904761905%, 100% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     transform: rotate(0deg) translate(0, 0);

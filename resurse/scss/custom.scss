@@ -49,9 +49,6 @@ $enable-gradients: true;
 // ═══════════════════════════════════════════════════════════════════════
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
-// efecte css
-
-// reflexie logo
 .logo-reflexie {
   position: relative;
   display: inline-flex;
@@ -68,7 +65,7 @@ $enable-gradients: true;
 
   .reflexie-text {
     position: absolute;
-    left: calc(100% + 20px); // dreapta
+    left: calc(100% + 20px);
     top: 0;
     transform: scaleX(-1);
     opacity: 0.35;
@@ -84,7 +81,6 @@ $enable-gradients: true;
   }
 }
 
-// hr stilizat
 hr.custom-hr {
   border: none;
   height: 4px;
@@ -117,7 +113,6 @@ hr.custom-hr {
   }
 }
 
-// text pe coloane
 .text-coloane {
   column-count: 2;
   column-rule: 2px dotted $primary;
@@ -128,13 +123,11 @@ hr.custom-hr {
   }
 }
 
-// selectie text
 ::selection {
   background-color: $primary;
   color: $light;
 }
 
-// efect duotone
 .imagine-duotone {
   width: 100%;
   max-width: 450px;
@@ -162,15 +155,13 @@ hr.custom-hr {
   transition: opacity 0.5s ease-in-out;
 }
 
-/* strat lumini */
 .imagine-duotone::before {
-  background-color: #00ffff; /* turcoaz */
+  background-color: #00ffff;
   mix-blend-mode: multiply;
 }
 
-/* strat umbre */
 .imagine-duotone::after {
-  background-color: #0000ff; /* albastru */
+  background-color: #0000ff;
   mix-blend-mode: screen;
 }
 

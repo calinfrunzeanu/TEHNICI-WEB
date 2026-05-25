@@ -302,17 +302,16 @@ function initGalerie() {
   }
   obGlobal.obGalerie = JSON.parse(fs.readFileSync(cale, "utf-8"));
 
-  // verificare date galerie
   var folderGaleriePath = path.join(__dirname, obGlobal.obGalerie.cale_galerie.replace(/^\//, ""));
 
   if (!fs.existsSync(folderGaleriePath)) {
-    console.error("[EROARE GALERIE] Folderul nu exista: " + folderGaleriePath);
+    console.error("eroare galerie: folderul nu exista " + folderGaleriePath);
   } else {
     obGlobal.obGalerie.imagini.forEach(function (img) {
       var caleImagineCurenta = path.join(folderGaleriePath, img.cale_imagine);
 
       if (!fs.existsSync(caleImagineCurenta)) {
-        console.error("[EROARE IMAGINE] Imaginea nu exista: " + caleImagineCurenta);
+        console.error("eroare imagine: fisierul nu exista " + caleImagineCurenta);
       }
     });
   }
@@ -472,25 +471,20 @@ app.use("/resurse", function (req, res, next) {
 app.use("/resurse", express.static(path.join(__dirname, "resurse")));
 
 app.use((req, res, next) => {
-  // doar pe paginile principale
   if (req.method === 'GET' && (req.path === '/' || req.path === '/index' || req.path === '/home')) {
     
-    // guard
     if (!obGlobal.obGalerie || !obGlobal.obGalerie.imagini) {
       return next();
     }
 
-    // selectam numar imagini
     const optiuniN = [7, 8, 9, 11];
     const N = optiuniN[Math.floor(Math.random() * optiuniN.length)];
 
-    // imagini amestecate
     let imaginiGalerie = [...obGlobal.obGalerie.imagini];
     imaginiGalerie.sort(() => 0.5 - Math.random());
     res.locals.imaginiGalerieAnimata = imaginiGalerie.slice(0, N);
     res.locals.caleGalerieAnimata = obGlobal.obGalerie.cale_galerie;
 
-    // procente animatie
     let timpCadru = 3;
     let timpTranzitie = 1;
     let timpTotal = N * timpCadru;
@@ -499,7 +493,6 @@ app.use((req, res, next) => {
     let procTurtire = procVizibil + ((timpTranzitie / 2) / timpTotal) * 100;
     let procIesire = ((timpCadru + timpTranzitie) / timpTotal) * 100;
 
-    // generator scss
     let continutScss = `
 $n: ${N};
 $timp_total: ${timpTotal}s;
@@ -511,14 +504,13 @@ $timp_total: ${timpTotal}s;
   overflow: hidden;
   margin: 2rem auto;
   border: 20px solid transparent;
-  // border imagine
   border-image: url('../imagini/mapa.png') 30 stretch; 
   
   figure {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     margin: 0;
-    transform-origin: center left; // pivot
+    transform-origin: center left;
     transition: clip-path 0.3s ease;
     animation: animatieGalerie $timp_total linear infinite;
     animation-fill-mode: both;
@@ -540,7 +532,6 @@ $timp_total: ${timpTotal}s;
     }
   }
 
-  // staggering
   @for $i from 1 through $n {
     figure:nth-child(#{$i}) {
       animation-delay: #{($n - $i) * ${timpCadru}}s;
@@ -549,25 +540,21 @@ $timp_total: ${timpTotal}s;
 }
 
 @keyframes animatieGalerie {
-  /* vizibil */
   0%, ${procVizibil}% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
-  /* turtire */
   ${procTurtire}% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
     transform: rotate(0deg) translate(0, 0);
     opacity: 1;
   }
-  /* rotire stanga */
   ${procIesire}% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
     transform: rotate(-90deg) translate(-50%, 0);
     opacity: 0;
   }
-  /* reset */
   ${procIesire + 0.001}%, 100% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     transform: rotate(0deg) translate(0, 0);
@@ -575,7 +562,6 @@ $timp_total: ${timpTotal}s;
   }
 }
 `;
-    // scriere si compilare scss
     const caleScssDinamic = path.join(global.folderScss, "galerie_animata.scss");
     fs.writeFileSync(caleScssDinamic, continutScss, "utf-8");
     compileazaScss("galerie_animata.scss");
