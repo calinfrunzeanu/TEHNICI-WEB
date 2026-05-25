@@ -522,7 +522,7 @@ $timp_total: ${timpTotal}s;
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     margin: 0;
-    transform-origin: bottom left; // Ca să se rotească din colț
+    transform-origin: center right; // Pivotul pe centru-dreapta
     animation: animatieGalerie $timp_total linear infinite;
     animation-fill-mode: both;
     
@@ -553,25 +553,28 @@ $timp_total: ${timpTotal}s;
 
 @keyframes animatieGalerie {
   0%, ${procVizibil}% {
-    transform: scaleY(1) rotate(0deg) translate(0, 0);
+    // Imaginea stă normal
+    transform: scale(1) rotate(0deg) translate(0, 0);
     z-index: 10;
     opacity: 1;
   }
   ${procTurtire}% {
-    // Cerință: Turtire pe verticală
-    transform: scaleY(0.1) rotate(0deg) translate(0, 0);
+    // 1. Turtire către centru (scaleY mic)
+    // 2. Pivotul rămâne pe centru
+    transform: scaleY(0.2) scaleX(1) rotate(0deg) translate(0, 0);
     z-index: 10;
     opacity: 1;
   }
   ${procIesire}% {
-    // Cerință: Rotirea imaginii pentru a ieși din "ecranul" galeriei
-    transform: scaleY(0.1) rotate(45deg) translate(-200%, 200%);
-    z-index: -10;
+    // 1. Rotire față de axa centrată mijloc-dreapta
+    // 2. translate(150%, 0) ajută la ieșirea spre dreapta
+    transform: scaleY(0.2) rotate(90deg) translate(150%, 0);
+    z-index: 5;
     opacity: 0;
   }
   ${procIesire + 0.001}%, 100% {
-    // Întoarcerea pe ascuns în poziția inițială, la coadă
-    transform: scaleY(1) rotate(0deg) translate(0, 0);
+    // Reset invizibil
+    transform: scale(1) rotate(0deg) translate(0, 0);
     z-index: -10;
     opacity: 0;
   }
