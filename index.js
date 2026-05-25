@@ -49,7 +49,11 @@ function compileazaScss(caleScss, caleCss) {
   // 2. Copiere în backup înainte de compilare/suprascriere
   if (fs.existsSync(absCss)) {
     const backupDir = path.join(__dirname, "backup", "resurse", "css");
-    const destBackup = path.join(backupDir, path.basename(absCss));
+    const extensie = path.extname(absCss);
+    const numeBaza = path.basename(absCss, extensie);
+    const timestamp = new Date().getTime(); // ex: 1681124489791
+    const numeBackup = `${numeBaza}_${timestamp}${extensie}`;
+    const destBackup = path.join(backupDir, numeBackup);
 
     try {
       if (!fs.existsSync(backupDir)) {
@@ -296,6 +300,25 @@ function initGalerie() {
     return;
   }
   obGlobal.obGalerie = JSON.parse(fs.readFileSync(cale, "utf-8"));
+
+  // ═════════════════ BONUS 5: Verificare JSON ═════════════════
+  // 1. Verificăm dacă folderul cale_galerie există
+  var folderGaleriePath = path.join(__dirname, obGlobal.obGalerie.cale_galerie.replace(/^\//, ""));
+
+  if (!fs.existsSync(folderGaleriePath)) {
+    console.error("[EROARE BONUS 5] Folderul specificat in cale_galerie NU există: " + folderGaleriePath);
+  } else {
+    // 2. Verificăm dacă fiecare imagine există în folder
+    obGlobal.obGalerie.imagini.forEach(function (img) {
+      var caleImagineCurenta = path.join(folderGaleriePath, img.cale_imagine);
+
+      if (!fs.existsSync(caleImagineCurenta)) {
+        console.error("[EROARE BONUS 5] Imaginea '" + img.cale_imagine + "' specificata in galerie.json NU există pe disc la calea: " + caleImagineCurenta);
+      }
+    });
+  }
+  // ════════════════════════════════════════════════════════════
+
   console.log("[GALERIE] incarcat: " + obGlobal.obGalerie.imagini.length + " imagini");
 }
 
