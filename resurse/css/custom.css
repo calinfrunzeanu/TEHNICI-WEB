@@ -11990,7 +11990,7 @@ hr.custom-hr::after {
 .imagine-duotone {
   width: 100%;
   max-width: 450px;
-  aspect-ratio: 16/9;
+  aspect-ratio: 1/1;
   background-image: url("/resurse/imagini/galerie/pisica_persana.jpg");
   background-size: cover;
   background-position: center;
@@ -12014,14 +12014,16 @@ hr.custom-hr::after {
   transition: opacity 0.5s ease-in-out;
 }
 
+/* STRATUL 1: Culoarea DESCHISĂ (Luminile) */
 .imagine-duotone::before {
-  background-color: #0000ff; /* Albastru */
-  mix-blend-mode: multiply;
+  background-color: #00ffff; /* Turcoaz */
+  mix-blend-mode: multiply; /* OBLIGATORIU multiply pentru culoarea deschisă */
 }
 
+/* STRATUL 2: Culoarea ÎNCHISĂ (Umbrele) */
 .imagine-duotone::after {
-  background-color: #00ffff; /* Cyan */
-  mix-blend-mode: screen;
+  background-color: #0000ff; /* Albastru */
+  mix-blend-mode: screen; /* OBLIGATORIU screen pentru culoarea închisă */
 }
 
 .imagine-duotone:hover {
