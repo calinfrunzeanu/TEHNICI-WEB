@@ -3,7 +3,7 @@
 
 <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <meta content="Numele Dumneavoastră" name="author">
+  <meta content="Frunzeanu Calin" name="author">
   <meta
     content="magazin animale de companie, pet shop online, PETHUB, produse pentru animale, ingrijire animale, accesorii animale companie"
     name="keywords">
@@ -27,20 +27,33 @@
   <link rel="stylesheet" href="resurse/css/general.css">
   <link rel="stylesheet" href="resurse/css/nav.css">
   <link rel="stylesheet" href="resurse/css/reset.css">
+  <link rel="stylesheet" href="resurse/css/print.css" media="print">
 </head>
 
 <body id="top">
 
   <!-- ═══════════════════════════════════ HEADER ═══════════ -->
   <header class="site-header">
+    
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox">
+    <!-- bonus: hamburger facut din 3 span-uri -->
+    <label for="menu-toggle" class="hamburger-btn" aria-label="deschide meniu">
+      <div class="hamburger-icon">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </label>
+
     <h1>
       <span class="logo-icon"><i class="fas fa-paw" aria-hidden="true"></i></span>
       PETHUB
     </h1>
+
     <nav>
       <ul>
         <li>
-          <a href="#acasa">Acasă</a>
+          <a href="#acasa"><i class="fas fa-home" aria-hidden="true"></i> Acasă</a>
           <ul>
             <li><a href="#promotii">Promoții</a></li>
             <li><a href="#categorii">Calendar</a></li>
@@ -48,10 +61,18 @@
             <li><a href="#testimoniale">Statistici</a></li>
           </ul>
         </li>
-        <li><a href="produse.html">Produse</a></li>
-        <li><a href="ebook.html">eBook Personalizat</a></li>
-        <li><a href="despre.html">Despre noi</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li>
+          <a href="produse.html"><i class="fas fa-shopping-bag" aria-hidden="true"></i> Produse</a>
+          <ul>
+            <li><a href="caini.html">Pentru Câini</a></li>
+            <li><a href="pisici.html">Pentru Pisici</a></li>
+            <li><a href="pesti.html">Pentru Pești</a></li>
+            <li><a href="rozatoare.html">Pentru Rozătoare</a></li>
+          </ul>
+        </li>
+        <li><a href="ebook.html"><i class="fas fa-book-open" aria-hidden="true"></i> eBook</a></li>
+        <li><a href="despre.html"><i class="fas fa-users" aria-hidden="true"></i> Despre noi</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope" aria-hidden="true"></i> Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -665,6 +686,9 @@
 
   <!-- ═══════════════════════════════════ FOOTER ═══════════ -->
   <footer class="site-footer">
+    <!-- Cerința print 1: bannerul este în footer; la printare print.css îl mută
+         în susul primei pagini cu position:absolute top:0, centrat pe 80% lățime -->
+    <p class="banner-proiect">Acesta este un proiect școlar!</p>
     <address>
       <p>Ne puteți contacta la:</p>
       <p>Telefon: <a href="tel:+40712345678">+40 712 345 678</a></p>
@@ -698,6 +722,29 @@
       <span class="tooltip">Mergi în susul paginii</span>
     </a>
   </footer>
+
+  <script>
+    // pe mobil :hover nu functioneaza la touch - adaugam clasa 'open' la click
+    // si o scoatem daca dai click in alta parte
+    if (window.matchMedia('(max-width: 599px)').matches) {
+      document.querySelectorAll('.site-header nav > ul > li').forEach(function(li) {
+        li.addEventListener('click', function(e) {
+          var isOpen = li.classList.contains('open');
+          // inchide toate submeniurile deschise
+          document.querySelectorAll('.site-header nav > ul > li').forEach(function(el) {
+            el.classList.remove('open');
+          });
+          if (!isOpen) li.classList.add('open');
+          e.stopPropagation();
+        });
+      });
+      document.addEventListener('click', function() {
+        document.querySelectorAll('.site-header nav > ul > li').forEach(function(el) {
+          el.classList.remove('open');
+        });
+      });
+    }
+  </script>
 
 </body>
 

@@ -1,0 +1,57 @@
+  <!-- ═══════════════════════════════════ FOOTER ═══════════ -->
+  <footer class="site-footer">
+    <!-- cerinta print 1: bannerul este in footer -->
+    <p class="banner-proiect">Acesta este un proiect scolar!</p>
+    <address>
+      <p>Ne puteti contacta la:</p>
+      <p>Telefon: <a href="tel:+40712345678">+40 712 345 678</a></p>
+      <p>Email: <a href="mailto:contact@pethub.ro">contact@pethub.ro</a></p>
+      <p>Adresa:
+        <a href="https://maps.google.com/?q=Facultatea+de+Matematica+si+Informatica+Universitatea+din+Bucuresti" target="_blank">
+          Str. Academiei nr. 14, <br>Bucuresti
+        </a>
+      </p>
+      <p>Chat: <a href="https://wa.me/40712345678">WhatsApp</a></p>
+    </address>
+    <p>
+      <small>&copy;
+        <time datetime="2025-04-02">2 aprilie 2025</time>
+        PETHUB. Toate drepturile rezervate.
+      </small>
+    </p>
+    <span class="footer-heart">
+      <i class="fas fa-heart fa-beat" aria-hidden="true"></i>
+      cu dragoste pentru animale
+    </span>
+    <iframe class="map-embed" allowfullscreen="True" loading="lazy"
+      src="https://www.google.com/maps?q=Facultatea+de+Matematica+si+Informatica+Universitatea+din+Bucuresti&output=embed"
+      style="border:0;">
+    </iframe>
+    <a href="#top" class="scroll-top-btn" title="text informativ">
+      <div class="circle-container">
+        <span class="arrow-icon">&#8593;</span>
+      </div>
+      <span class="scroll-tooltip">Mergi in susul paginii</span>
+    </a>
+  </footer>
+
+  <script>
+    // pe mobil :hover nu functioneaza la touch - adaugam clasa 'open' la click
+    if (window.matchMedia('(max-width: 599px)').matches) {
+      document.querySelectorAll('.site-header nav > ul > li').forEach(function(li) {
+        li.addEventListener('click', function(e) {
+          var isOpen = li.classList.contains('open');
+          document.querySelectorAll('.site-header nav > ul > li').forEach(function(el) {
+            el.classList.remove('open');
+          });
+          if (!isOpen) li.classList.add('open');
+          e.stopPropagation();
+        });
+      });
+      document.addEventListener('click', function() {
+        document.querySelectorAll('.site-header nav > ul > li').forEach(function(el) {
+          el.classList.remove('open');
+        });
+      });
+    }
+  </script>

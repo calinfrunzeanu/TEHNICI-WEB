@@ -1,0 +1,58 @@
+<!-- ═══════════════════════════════ GALERIE STATICĂ ════════════════════════════ -->
+<section class="galerie-sectiune">
+  <% if (typeof modPagina === 'undefined' || !modPagina) { %>
+  <h2>
+    <i class="fas fa-images" aria-hidden="true"></i> Galeria noastră
+    <span class="badge text-bg-primary ms-2" style="font-size:0.55em; vertical-align:middle;">LIVE</span>
+  </h2>
+  <p class="galerie-intro">Descoperă animalele minunate din familia PETHUB. Galeria se actualizează pe parcursul zilei.</p>
+  <% } %>
+
+  <% if (typeof imaginiGalerie !== 'undefined' && imaginiGalerie.length > 0) { %>
+    <div class="galerie-grid">
+      <% imaginiGalerie.forEach(function(img, idx) { %>
+        <div class="galerie-item">
+          <figure>
+            <picture>
+              <!-- Ecran mic: varianta -sm (200px lățime) -->
+              <source media="(max-width: 480px)"
+                      srcset="<%= img._cale_sm %>">
+              <!-- Ecran mediu: varianta -md (300px lățime) -->
+              <source media="(max-width: 899px)"
+                      srcset="<%= img._cale_md %>">
+              <!-- Ecran mare: imaginea originală (450px lățime) -->
+              <img src="<%= img._cale_mare %>"
+                   alt="<%= typeof img.alt !== 'undefined' ? img.alt : img.cale_imagine %>"
+                   title="<%= img.descriere %>"
+                   width="450"
+                   height="300"
+                   loading="lazy">
+            </picture>
+            <figcaption>
+              <span class="galerie-titlu"><%= img.titlu %></span>
+              <p class="galerie-descriere"><%= img.descriere %></p>
+              <% if (img.atribuire) { %>
+                <a class="galerie-atribuire"
+                   href="<%= img.atribuire.url_licenta %>"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   title="Licență: <%= img.atribuire.licenta %> — Autor: <%= img.atribuire.autor %>">
+                  <i class="fas fa-copyright" aria-hidden="true"></i> <%= img.atribuire.autor %>
+                </a>
+              <% } %>
+            </figcaption>
+          </figure>
+        </div>
+      <% }); %>
+    </div>
+    <p class="galerie-info">
+      <i class="fas fa-clock" aria-hidden="true"></i>
+      Se afișează <%= imaginiGalerie.length %> imagine<%= imaginiGalerie.length !== 1 ? 'i' : '' %> active acum.
+    </p>
+  <% } else { %>
+    <div class="alert alert-dark d-flex align-items-center gap-3 galerie-gol-alert" role="alert">
+      <i class="fas fa-moon fa-2x" aria-hidden="true"></i>
+      <span>Nu există imagini disponibile la ora curentă. Reveniți mai târziu!</span>
+    </div>
+  <% } %>
+</section>

@@ -1,0 +1,96 @@
+{
+  "cale_galerie": "/resurse/imagini/galerie",
+  "imagini": [
+    {
+      "cale_imagine": "golden_retriever.jpg",
+      "titlu": "Golden Retriever",
+      "descriere": "Un golden retriever prietenos si jucaus, mereu cu zambetul pe buze.",
+      "timp": "05:00-11:00",
+      "alt": "Caine Golden Retriever"
+    },
+    {
+      "cale_imagine": "pisica_siameza.jpg",
+      "titlu": "Pisica Siameza",
+      "descriere": "Pisica siameza eleganta cu ochi albastri fascinanti.",
+      "timp": "18:00-23:59",
+      "alt": "Pisica Siameza"
+    },
+    {
+      "cale_imagine": "papagal_verde.jpg",
+      "titlu": "Papagal Verde",
+      "descriere": "Papagal verde inteligent si sociabil, capabil sa imite sunete.",
+      "timp": "09:00-15:00",
+      "alt": "Papagal Verde"
+    },
+    {
+      "cale_imagine": "peste_tropical.jpg",
+      "titlu": "Pesti Tropicali",
+      "descriere": "Pesti colorati dintr-un acvariu tropical, o lume fascinanta.",
+      "timp": "12:00-18:00",
+      "alt": "Pesti tropicali intr-un acvariu"
+    },
+    {
+      "cale_imagine": "iepure_alb.jpg",
+      "titlu": "Iepure Alb",
+      "descriere": "Iepure alb domestic, bland si curios, ideal pentru copii.",
+      "timp": "07:00-13:00",
+      "alt": "Iepure alb cu urechi lungi"
+    },
+    {
+      "cale_imagine": "beagle_jucaus.jpg",
+      "titlu": "Beagle Jucaus",
+      "descriere": "Beagle energic si curios, plin de viata si afectiune.",
+      "timp": "10:00-20:00",
+      "alt": "Caine Beagle jucaus"
+    },
+    {
+      "cale_imagine": "caine_ciobanesc.jpg",
+      "titlu": "Caine Ciobanesc",
+      "descriere": "Caine ciobanesc loial si inteligent, ideal ca animal de companie.",
+      "timp": "16:00-22:00",
+      "alt": "Caine Ciobanesc German"
+    },
+    {
+      "cale_imagine": "pisica_persana.jpg",
+      "titlu": "Pisica Persana",
+      "descriere": "Pisica persana cu blana lunga si temperament calm.",
+      "timp": "06:00-12:00",
+      "alt": "Pisica Persana cu blana lunga"
+    },
+    {
+      "cale_imagine": "hamster_auriu.jpg",
+      "titlu": "Hamster Auriu",
+      "descriere": "Hamster auriu pufos si activ mai ales seara.",
+      "timp": "17:00-23:59",
+      "alt": "Hamster auriu cu obrajii umflati"
+    },
+    {
+      "cale_imagine": "gecko_leopard.jpg",
+      "titlu": "Gecko Leopard",
+      "descriere": "Gecko leopard cu model unic si fascinant, usor de ingrijit.",
+      "timp": "00:00-10:00",
+      "alt": "Gecko Leopard pe o piatra"
+    },
+    {
+      "cale_imagine": "pisica_british.jpg",
+      "titlu": "British Shorthair",
+      "descriere": "Pisica British Shorthair placida si afectuoasa, cu blana densa.",
+      "timp": "08:00-14:00",
+      "alt": "Pisica British Shorthair gri",
+      "atribuire": {
+        "autor": "Alvesgaspar",
+        "titlu_original": "British Shorthair silver tabby",
+        "sursa": "https://commons.wikimedia.org/wiki/File:British_Shorthair_silver_tabby.jpg",
+        "licenta": "CC BY-SA 3.0",
+        "url_licenta": "https://creativecommons.org/licenses/by-sa/3.0/"
+      }
+    },
+    {
+      "cale_imagine": "chinchilla.jpg",
+      "titlu": "Chinchilla",
+      "descriere": "Chinchilla pufoasa si curioasa, activa noaptea.",
+      "timp": "22:00-06:00",
+      "alt": "Chinchilla gri pe o creanga"
+    }
+  ]
+}

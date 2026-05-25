@@ -1,0 +1,43 @@
+<%- include('../fragmente/head', {titlu: 'PETHUB - Galerie Animale'}) %>
+<body id="top">
+
+<%- include('../fragmente/header') %>
+
+<main>
+
+  <!-- ── Intro pagina galerie ─────────────────────────── -->
+  <div class="galerie-page-intro">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/"><i class="fas fa-home" aria-hidden="true"></i> Acasă</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Galerie</li>
+      </ol>
+    </nav>
+
+    <h1 class="galerie-page-title">
+      <i class="fas fa-images" aria-hidden="true"></i> Galeria PETHUB
+      <span class="badge text-bg-primary ms-2" style="font-size:0.4em;vertical-align:middle;">LIVE</span>
+    </h1>
+
+    <p class="galerie-page-subtitle">
+      Descoperă toți membrii familiei noastre cu blană, pene și solzi.
+      Galeria se actualizează pe parcursul zilei în funcție de programul fiecărui animal.
+    </p>
+  </div>
+
+  <!-- ── Galeria propriu-zisă ──────────────────────────── -->
+  <div class="galerie-pagina-wrapper">
+    <%- include('../fragmente/galerie', {
+      imaginiGalerie: typeof imaginiGalerie !== 'undefined' ? imaginiGalerie : [],
+      caleGalerie:    typeof caleGalerie    !== 'undefined' ? caleGalerie    : '',
+      modPagina:      true
+    }) %>
+  </div>
+
+</main>
+
+<%- include('../fragmente/footer') %>
+</body>
+</html>

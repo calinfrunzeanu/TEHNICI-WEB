@@ -1,0 +1,29 @@
+{
+  "name": "pethub",
+  "version": "1.0.0",
+  "description": "Magazin online pentru animale de companie - proiect scolar",
+  "main": "index.js",
+  "keywords": [
+    "pet shop",
+    "animale",
+    "magazin online",
+    "pethub"
+  ],
+  "author": "Frunzeanu Calin",
+  "license": "ISC",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "nodemon": "^3.1.14",
+    "sass": "^1.100.0",
+    "sharp": "^0.34.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calinfrunzeanu/TEHNICI-WEB.git"
+  }
+}

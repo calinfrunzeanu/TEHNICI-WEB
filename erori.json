@@ -1,0 +1,31 @@
+{
+  "cale_baza": "/resurse/erori",
+  "eroare_default": {
+    "titlu": "Eroare",
+    "text": "A aparut o eroare neasteptata. Va rugam sa incercati din nou.",
+    "imagine": "default.svg"
+  },
+  "info_erori": [
+    {
+      "identificator": 400,
+      "status": true,
+      "titlu": "400 - Bad Request",
+      "text": "Fisierele .ejs nu pot fi accesate direct din browser. Cererea este invalida.",
+      "imagine": "400.svg"
+    },
+    {
+      "identificator": 403,
+      "status": true,
+      "titlu": "403 - Forbidden",
+      "text": "Nu aveti permisiunea sa accesati aceasta resursa sau director.",
+      "imagine": "403.svg"
+    },
+    {
+      "identificator": 404,
+      "status": true,
+      "titlu": "404 - Pagina nu a fost gasita",
+      "text": "Pagina pe care o cautati nu exista sau a fost mutata.",
+      "imagine": "404.svg"
+    }
+  ]
+}

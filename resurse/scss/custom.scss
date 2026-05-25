@@ -1,0 +1,138 @@
+// ═══════════════════════════════════════════════════════════════════════
+// custom.scss — Customizare Bootstrap pentru PETHUB
+// ═══════════════════════════════════════════════════════════════════════
+
+// 1. Familia de font implicită
+$font-family-sans-serif: 'Nunito', sans-serif;
+
+// 2. Schema cromatică: Culori principale (Primary & Secondary)
+$primary: #e25b45;   // warm orange/red
+$secondary: #2e7d32; // forest green
+
+// 3. Culori de background pentru 2 teme
+// Tema 1 — LIGHT: fundal cald ivory, text inchis
+$body-bg:    #fefcf9;
+$body-color: #2c3e50;
+$light:      #fff3e0;   // componente light (cards, alerts) — nuanta calda
+// Tema 2 — DARK: bleumarin profund (folosit pe navbar, badges, butoane dark)
+$dark:       #1a1a2e;
+
+// 4. Culoare de font dintr-un buton (ex: text personalizat pe butonul secondary)
+$btn-secondary-color: #e8f5e9; // text deschis la culoare (very light green/mint) pentru butonul secondary
+
+// 5. Dimensiuni de ecran diferite pentru ecrane medii și mari (Breakpoints)
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 720px,   // implicit 768px
+  lg: 1050px,  // implicit 992px
+  xl: 1200px,
+  xxl: 1400px
+);
+
+// 6. Dimensiunea razelor de border (Colțuri mai rotunjite)
+$border-radius: 12px;
+$border-radius-sm: 8px;
+$border-radius-lg: 18px;
+
+// 7. Dimensiunea heading-urilor
+$h1-font-size: 2.75rem;
+$h2-font-size: 2.1rem;
+$h3-font-size: 1.65rem;
+
+// 8. Variabile suplimentare alese (Shadows & Gradients)
+$enable-shadows: true;
+$enable-gradients: true;
+
+// ═══════════════════════════════════════════════════════════════════════
+// IMPORT BOOTSTRAP SCSS
+// ═══════════════════════════════════════════════════════════════════════
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// ═══════════════════════════════════════════════════════════════════════
+// EFECTE CSS SUPLIMENTARE (Etapa 5)
+// ═══════════════════════════════════════════════════════════════════════
+
+// 1. Reflexie (cerință individuală - OY)
+.logo-reflexie {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: $primary;
+  transition: color 0.3s ease;
+  cursor: pointer;
+
+  .logo-text {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .reflexie-text {
+    position: absolute;
+    left: calc(100% + 20px); // reflexia la dreapta
+    top: 0;
+    transform: scaleX(-1);
+    opacity: 0.35;
+    color: inherit;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  &:hover {
+    color: $secondary !important;
+  }
+}
+
+// 2. Stilizare <hr> (efect-css-stilizare-hr)
+hr.custom-hr {
+  border: none;
+  height: 4px;
+  background: $primary;
+  position: relative;
+  margin: 3rem auto;
+  width: 60%;
+  overflow: visible;
+
+  &::before {
+    content: "✿";
+    position: absolute;
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $primary;
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  &::after {
+    content: "✿";
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $primary;
+    font-size: 24px;
+    line-height: 1;
+  }
+}
+
+// 3. Scrierea textului pe coloane (column-count)
+.text-coloane {
+  column-count: 2;
+  column-rule: 2px dotted $primary;
+  column-gap: 2rem;
+
+  @media (max-width: 1049px) {
+    column-count: 1;
+  }
+}
+
+// 4. Schimbarea afișării implicite a textului selectat (::selection)
+::selection {
+  background-color: $primary;
+  color: $light;
+}
+

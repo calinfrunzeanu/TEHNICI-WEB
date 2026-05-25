@@ -1,0 +1,99 @@
+@media print {
+  .page-grid {
+    display: block !important;
+  }
+  .zone {
+    display: block !important;
+    margin-bottom: 2rem !important;
+    page-break-inside: avoid !important;
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+  img,
+  video,
+  audio,
+  iframe,
+  embed,
+  object,
+  picture,
+  source,
+  canvas,
+  figcaption,
+  .map-embed,
+  .logo-icon,
+  nav,
+  .hamburger-btn,
+  .menu-toggle-checkbox,
+  .scroll-top-btn {
+    display: none !important;
+  }
+  a,
+  footer a,
+  .zone-7 a,
+  .zone-8 a {
+    text-decoration: none !important;
+    color: #000 !important;
+    background: transparent !important;
+  }
+  body {
+    position: relative !important;
+  }
+  .site-footer {
+    position: static !important;
+    page-break-before: always !important;
+    background: transparent !important;
+    color: #000 !important;
+    border: none !important;
+  }
+  .banner-proiect {
+    position: absolute !important;
+    top: 0 !important;
+    left: 10% !important;
+    width: 80% !important;
+    text-align: center !important;
+    border: 2px dotted #000 !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    font-weight: bold !important;
+  }
+  .site-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100vh !important;
+    page-break-after: always !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  .site-header h1 {
+    font-size: 2.5rem !important;
+    text-decoration: underline !important;
+    color: #000 !important;
+    margin: 0 !important;
+  }
+  body::after {
+    content: "Calin Frunzeanu";
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 100px !important;
+    height: 2cm !important;
+    border: 3px double #000 !important;
+    opacity: 0.65 !important;
+    display: block !important;
+    line-height: 2cm !important;
+    font-size: 12px !important;
+    text-align: center !important;
+    z-index: 9999 !important;
+  }
+  @page :left {
+    margin-left: 2.5cm;
+    margin-right: 0.5cm;
+  }
+  @page :right {
+    margin-left: 0.5cm;
+    margin-right: 2.5cm;
+  }
+}

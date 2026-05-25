@@ -1,0 +1,381 @@
+<%- include('../fragmente/head', {titlu: 'PETHUB - Magazin online pentru animale de companie'}) %>
+<body id="top">
+
+<%- include('../fragmente/header') %>
+
+<main>
+  <div class="page-grid">
+
+    <!-- ══════════════ ZONA 1 — POSTER / F-PATTERN ══════ -->
+    <section class="zone zone-1" id="acasa">
+      <div class="hero-f">
+        <div class="hero-row1">
+          <hgroup>
+            <h2>Bine ati venit la <span class="hero-brand">PETHUB</span></h2>
+            <p class="hero-subtitle">Magazinul online #1 pentru animale de companie din Romania</p>
+          </hgroup>
+        </div>
+        <div class="hero-row2">
+          <div class="hero-text">
+            <p>PETHUB este destinatia completa pentru tot ce are nevoie animalul tau de companie — hrana premium, accesorii, ghiduri de ingrijire si consultanta specializata, toate intr-un singur loc.</p>
+            <ul class="hero-features">
+              <li><i class="fas fa-check-circle" aria-hidden="true"></i> Hrana premium certificata</li>
+              <li><i class="fas fa-check-circle" aria-hidden="true"></i> Jucarii si accesorii de calitate</li>
+              <li><i class="fas fa-check-circle" aria-hidden="true"></i> Livrare rapida in 24h</li>
+              <li><i class="fas fa-check-circle" aria-hidden="true"></i> Consiliere veterinara gratuita</li>
+              <li><i class="fas fa-check-circle" aria-hidden="true"></i> Garantie satisfactie 30 zile</li>
+            </ul>
+          </div>
+          <div class="hero-image">
+            <picture>
+              <!-- cai absolute catre resurse (req 7) -->
+              <source media="(min-width: 1024px)" srcset="/resurse/imagini/caine_mare.jpg">
+              <source media="(min-width: 768px)" srcset="/resurse/imagini/caine_mediu.jpg">
+              <img alt="Un caine fericit cu jucaria sa preferata" title="Caine fericit PETHUB"
+                class="responsive-img hero-img" src="/resurse/imagini/caine_mic.jpg">
+            </picture>
+          </div>
+        </div>
+        <div class="hero-row3">
+          <div class="hero-cta">
+            <a href="/produse" class="btn-primary">
+              <i class="fas fa-shopping-bag" aria-hidden="true"></i> Exploreaza produse
+            </a>
+            <a href="#promotii" class="btn-secondary">
+              <i class="fas fa-tags" aria-hidden="true"></i> Vezi promotii
+            </a>
+          </div>
+          <div class="hero-stats-bar">
+            <div class="hero-stat"><i class="fas fa-box-open" aria-hidden="true"></i><strong>500+</strong><span>Produse</span></div>
+            <div class="hero-stat"><i class="fas fa-users" aria-hidden="true"></i><strong>10k+</strong><span>Clienti</span></div>
+            <div class="hero-stat"><i class="fas fa-star" aria-hidden="true"></i><strong>4.9</strong><span>Rating</span></div>
+            <div class="hero-stat"><i class="fas fa-truck" aria-hidden="true"></i><strong>24h</strong><span>Livrare</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="custom-hr" style="grid-column: 1 / -1;">
+
+    <!-- ══════════════ DEMONSTRAȚIE BOOTSTRAP ══════════════ -->
+    <section class="zone" style="grid-column: 1 / -1; padding: 2rem;">
+      <h3><i class="fab fa-bootstrap" aria-hidden="true"></i> Elemente Bootstrap Customizate</h3>
+      <p>Această secțiune demonstrează integrarea Bootstrap cu culorile, fonturile și colțurile rotunjite configurate în SCSS.</p>
+      
+      <div class="row g-3">
+        <!-- Card cu fundal Primary (tema 1) -->
+        <div class="col-md-6">
+          <div class="card bg-primary text-white h-100 shadow">
+            <div class="card-body">
+              <h5 class="card-title text-white">Card Tematic Primary (Warm Orange)</h5>
+              <p class="card-text">Acest card folosește culoarea principală a site-ului configurată în Bootstrap (`$primary`). De asemenea, observă colțurile rotunjite și umbra activată prin `$enable-shadows`.</p>
+              <a href="/galerie" class="btn btn-light"><i class="fas fa-images" aria-hidden="true"></i> Explorează galeria</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card cu fundal Secondary (tema 2) -->
+        <div class="col-md-6">
+          <div class="card bg-secondary text-white h-100 shadow">
+            <div class="card-body">
+              <h5 class="card-title text-white">Card Tematic Secondary (Forest Green)</h5>
+              <p class="card-text">Acest card folosește culoarea secundară (`$secondary`). Butonul de mai jos are textul customizat în nuanța `$btn-secondary-color`.</p>
+              <a href="#promotii" class="btn btn-secondary border-light"><i class="fas fa-tags" aria-hidden="true"></i> Vezi promoțiile</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ ZONA 2 — TABEL PRODUSE ═══════════ -->
+    <section class="zone zone-2" id="promotii">
+      <h2><i class="fas fa-tags" aria-hidden="true"></i> Promotii &amp; Stoc</h2>
+      <div class="table-wrapper">
+        <table class="main-table">
+          <caption>Produse PETHUB — Stoc si Preturi</caption>
+          <thead>
+            <tr>
+              <th scope="col">Produs</th>
+              <th scope="col">Categorie</th>
+              <th scope="col">Pret (lei)</th>
+              <th scope="col">Stoc</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Hrana premium caini 5kg</td><td>Caini</td><td>189</td><td>47</td></tr>
+            <tr><td>Jucarie rezistenta minge</td><td>Caini</td><td>35</td><td>120</td></tr>
+            <tr><td>Litiera pisici 10L</td><td>Pisici</td><td>62</td><td>85</td></tr>
+            <tr><td>Acvariu starter kit</td><td rowspan="2">Pesti</td><td>245</td><td>18</td></tr>
+            <tr><td>Filtru acvariu premium</td><td>189</td><td>25</td></tr>
+            <tr><td>Cusca rozatoare deluxe</td><td>Rozatoare</td><td>138</td><td>32</td></tr>
+            <tr><td colspan="3">Terrarium reptile 60L - Reptile</td><td>390</td><td>9</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <blockquote>
+        "Prietenul tau blanос merita ce e mai bun. La PETHUB gasesti produse de calitate la preturi accesibile!"
+        <cite>— Revista Animale Fericite</cite>
+      </blockquote>
+    </section>
+
+    <!-- ══════════════ ZONA 3 — CALENDAR ══════ -->
+    <section class="zone zone-3" id="categorii">
+      <h2><i class="fas fa-calendar-alt" aria-hidden="true"></i> Calendar</h2>
+      <div class="calendar">
+        <p>25 mai — Intalnire adoptii</p>
+        <p>1 iunie — Workshop nutritie</p>
+        <p>10 iunie — Ziua jucariilor</p>
+      </div>
+    </section>
+
+    <!-- ══════════════ ZONA 4 — ANUNTURI ════════════════ -->
+    <section class="zone zone-4" id="evenimente">
+      <h2><i class="fas fa-bullhorn" aria-hidden="true"></i> Anunturi</h2>
+      <div class="announcements">
+        <article class="announcement announcement-urgent">
+          <div class="ann-icon"><i class="fas fa-fire" aria-hidden="true"></i></div>
+          <div class="ann-body">
+            <strong class="ann-title">REDUCERI DE PRIMAVARA — pana la 40%</strong>
+            <p>Toate produsele pentru caini si pisici sunt reduse. Oferta limitata!</p>
+            <time class="ann-date" datetime="2025-05-01">1 mai 2025</time>
+          </div>
+        </article>
+        <article class="announcement announcement-info">
+          <div class="ann-icon"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
+          <div class="ann-body">
+            <strong class="ann-title">Workshop Nutritie — Inregistrare deschisa</strong>
+            <p>Workshop online dedicat nutritiei optime pentru caini si pisici.</p>
+            <time class="ann-date" datetime="2025-06-01T18:30">1 iunie 2025, ora 18:30</time>
+          </div>
+        </article>
+        <article class="announcement announcement-success">
+          <div class="ann-icon"><i class="fas fa-heart" aria-hidden="true"></i></div>
+          <div class="ann-body">
+            <strong class="ann-title">Adoptii — Consultanta gratuita</strong>
+            <p>Consultanta gratuita si kit accesorii cadou la fiecare adoptie.</p>
+            <time class="ann-date" datetime="2025-05-25T12:00">25 mai 2025, ora 12:00</time>
+          </div>
+        </article>
+        <article class="announcement announcement-info">
+          <div class="ann-icon"><i class="fas fa-stethoscope" aria-hidden="true"></i></div>
+          <div class="ann-body">
+            <strong class="ann-title">Consultatii veterinare gratuite</strong>
+            <p>Parteneriat Dr. Paws — consultatii gratuite pentru primii 80 de pacienti.</p>
+            <time class="ann-date" datetime="2025-06-15">15 iunie 2025</time>
+          </div>
+        </article>
+      </div>
+      <div class="ann-meters">
+        <p>Confirmari eveniment 25 mai:
+          <meter value="30" min="0" max="100" low="40" high="80" optimum="90">30 din 100</meter>
+          <span class="meter-label">30 / 100 locuri</span>
+        </p>
+        <p>Disponibilitate oferte:
+          <meter value="90" min="0" max="100" low="40" high="80" optimum="95">90 din 100</meter>
+          <span class="meter-label">90 / 100 articole</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════ ZONA 8 — CONTINUT MIXT ═══════════ -->
+    <section class="zone zone-8" id="program">
+      <div class="zone8-inner">
+
+        <div class="zone8-block">
+          <h2><i class="fas fa-calendar-days" aria-hidden="true"></i> Program PETHUB</h2>
+          <div class="table-wrapper">
+            <table class="table-border">
+              <caption>Programul complet al activitatilor PETHUB</caption>
+              <thead><tr><th>Data</th><th>Eveniment</th><th>Locatie</th><th>Disponibilitate</th></tr></thead>
+              <tbody>
+                <tr><td rowspan="2">25-26 mai 2025</td><td>Adoptii animale</td><td>Magazin central</td><td>30 locuri</td></tr>
+                <tr><td>Workshop nutritie</td><td>Online</td><td>100 locuri</td></tr>
+                <tr><td>10 iunie 2025</td><td colspan="2">Promotie jucarii in toate categoriile</td><td>200 locuri</td></tr>
+                <tr><td>15 iunie 2025</td><td>Consultatii gratuite</td><td>Clinica partenera</td><td>80 locuri</td></tr>
+                <tr><td>20 iunie 2025</td><td>Prezentare produse premium</td><td>Showroom</td><td>20 locuri</td></tr>
+              </tbody>
+              <tfoot><tr><td colspan="3">Total activitati planificate</td><td>5 evenimente</td></tr></tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="zone8-block">
+          <h2><i class="fas fa-layer-group" aria-hidden="true"></i> Categorii de produse</h2>
+          <dl class="categories-dl">
+            <dt><i class="fas fa-dog" aria-hidden="true"></i> Pentru caini</dt>
+            <dd>Hrana uscata si umeda, jucarii, accesorii, produse de ingrijire, echipamente</dd>
+            <dt><i class="fas fa-cat" aria-hidden="true"></i> Pentru pisici</dt>
+            <dd>Hrana uscata si umeda, jucarii, litiere, produse de ingrijire, echipamente</dd>
+            <dt><i class="fas fa-dove" aria-hidden="true"></i> Pentru pasari</dt>
+            <dd>Hrana si suplimente, jucarii, accesorii, colivii si voliere</dd>
+            <dt><i class="fas fa-fish" aria-hidden="true"></i> Pentru pesti</dt>
+            <dd>Hrana si suplimente, accesorii, acvarii, filtre, pompe, iluminat</dd>
+            <dt><i class="fas fa-circle" aria-hidden="true"></i> Pentru rozatoare</dt>
+            <dd>Hrana si suplimente, jucarii, accesorii, custi, adaposturi</dd>
+            <dt><i class="fas fa-dragon" aria-hidden="true"></i> Pentru reptile</dt>
+            <dd>Hrana si suplimente, accesorii, terarii, sisteme de incalzire si iluminat</dd>
+          </dl>
+          <aside>
+            <h3><i class="fas fa-bolt" aria-hidden="true"></i> Recomandare rapida</h3>
+            <p>Adauga in cos kitul de ingrijire pentru animale mici si primesti transport gratuit la comenzi de peste 200 lei.</p>
+          </aside>
+        </div>
+
+        <div class="zone8-block">
+          <h2><i class="fas fa-quote-left" aria-hidden="true"></i> Testimoniale clienti</h2>
+          <article class="testimonial-card">
+            <p>"Am descoperit <b>PETHUB</b> acum 6 luni si sunt foarte multumit. <em>Cainele meu adora hrana premium</em> si jucariile rezistente. <strong>Livrarea este rapida</strong> si serviciul clienti excelent!" — Andrei P.</p>
+            <p><q>Mai multa grija pentru animalul tau inseamna mai multa bucurie acasa.</q></p>
+            <p>Termenul <dfn>pet parenting</dfn> se refera la abordarea moderna de ingrijire a animalelor de companie.</p>
+            <p>La PETHUB folosim standardele <abbr title="International Pet Food Association">IPFA</abbr> pentru a selecta cele mai bune produse.</p>
+          </article>
+        </div>
+
+        <div class="zone8-block">
+          <h2><i class="fas fa-video" aria-hidden="true"></i> Videoclipuri utile</h2>
+          <p>Vizionati videoclipuri despre ingrijirea animalelor:</p>
+          <div class="container-iframe">
+            <div class="taburi-iframe">
+              <a href="https://www.youtube.com/embed/3nbeVDnxFkI" target="ifr-video" class="tab-btn tab-active"><i class="fas fa-dog" aria-hidden="true"></i> Caini</a>
+              <a href="https://www.youtube.com/embed/KZp3_8Y3R5A" target="ifr-video" class="tab-btn"><i class="fas fa-cat" aria-hidden="true"></i> Pisici</a>
+              <a href="https://www.youtube.com/embed/AbNS2XcyxOM" target="ifr-video" class="tab-btn"><i class="fas fa-fish" aria-hidden="true"></i> Pesti</a>
+            </div>
+            <iframe name="ifr-video" class="tab-iframe" width="360" height="315"
+              src="https://www.youtube.com/embed/3nbeVDnxFkI" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+
+        <!-- video-vtt: video cu subtitrari vtt -->
+        <div class="zone8-block" id="video-vtt">
+          <h2><i class="fas fa-cat" aria-hidden="true"></i> Ingrijirea pisicilor</h2>
+          <p>Videoclip informativ despre ingrijirea corecta a pisicilor de companie.</p>
+          <video class="site-video"
+            poster="/resurse/imagini/pisica-poster.jpg"
+            controls
+            preload="metadata">
+            <source src="/resurse/video/pisica.mp4" type="video/mp4">
+            <source src="/resurse/video/pisica.webm" type="video/webm">
+            <!-- video-vtt: track ro implicit, en secundar -->
+            <track kind="subtitles" src="/resurse/vtt/pisica-ro.vtt" srclang="ro" label="Romana" default>
+            <track kind="subtitles" src="/resurse/vtt/pisica-en.vtt" srclang="en" label="English">
+            Browserul tau nu suporta elementul video.
+          </video>
+        </div>
+
+        <div class="zone8-block">
+          <h2><i class="fas fa-file-pdf" aria-hidden="true"></i> Ghid PDF integrat</h2>
+          <!-- cale absoluta catre resursa (req 7) -->
+          <embed height="400px" src="/resurse/docs/ghid_ingrijire_animale.pdf" type="application/pdf" width="100%"></embed>
+          <p>
+            <a class="btn-secondary" download="PETHUB_ghid_ingrijire.pdf" href="/resurse/docs/ghid_ingrijire_animale.pdf">
+              <i class="fas fa-download" aria-hidden="true"></i> Descarca ghidul gratuit
+            </a>
+          </p>
+        </div>
+
+        <div class="zone8-block">
+          <h2><i class="fas fa-circle-question" aria-hidden="true"></i> Intrebari frecvente</h2>
+          <details><summary>Cum pot comanda produse de pe PETHUB?</summary><p>Navigati la categoria dorita, selectati produsul si adaugati-l in cos. La checkout completati datele de livrare si alegeti metoda de plata.</p></details>
+          <details><summary>Care este timpul de livrare?</summary><p>Livram in 24-48 ore in orasele principale si 2-4 zile in restul tarii. Comenzile plasate inainte de 14:00 se expediaza in aceeasi zi.</p></details>
+          <details><summary>Pot returna produsele?</summary><p>Da, in termen de 14 zile de la primire, in starea originala, nefolosite, in ambalajul original.</p></details>
+          <details><summary>Ce fac daca animalul meu nu accepta hrana comandata?</summary><p>Garantia "Gusta si aproba" — returnati in 30 zile chiar daca ambalajul a fost deschis, cu minim 75% din produs.</p></details>
+        </div>
+
+        <div class="zone8-block zone8-formula">
+          <h2><i class="fas fa-calculator" aria-hidden="true"></i> Formula ratei metabolice</h2>
+          <p>Calculul ratei metabolice de repaus (RMR) pentru animale de companie:</p>
+          <div class="formula-box">
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <mrow><mi>RMR</mi><mo>=</mo><mn>70</mn><mo>&#x2062;</mo><msup><mi>M</mi><mfrac><mn>3</mn><mn>4</mn></mfrac></msup></mrow>
+            </math>
+          </div>
+        </div>
+
+        <div class="zone8-block">
+          <h2><i class="fas fa-map-location-dot" aria-hidden="true"></i> Harta interactiva PETHUB</h2>
+          <!-- cale absoluta catre resursa (req 7) -->
+          <img alt="Harta interactiva cu zone pentru animale" class="mapa" src="/resurse/imagini/mapa.png" usemap="#petmap">
+        </div>
+
+      </div><!-- /.zone8-inner -->
+    </section>
+
+    <!-- ══════════════ ZONA 5 — UTILIZATORI ONLINE ═══════ -->
+    <section class="zone zone-5" id="recomandate">
+      <h2><span class="status-dot-green" aria-hidden="true"></span> Utilizatori Online</h2>
+      <div class="users-panel">
+        <div class="users-count-badge">
+          <span class="users-count-number">47</span>
+          <span class="users-count-label">activi acum</span>
+        </div>
+        <ul class="users-list">
+          <li class="user-item"><span class="user-avatar"><i class="fas fa-user-circle" aria-hidden="true"></i></span><span class="user-name">Andrei P.</span><span class="user-status user-online">online</span></li>
+          <li class="user-item"><span class="user-avatar"><i class="fas fa-user-circle" aria-hidden="true"></i></span><span class="user-name">Maria C.</span><span class="user-status user-online">online</span></li>
+          <li class="user-item"><span class="user-avatar"><i class="fas fa-user-circle" aria-hidden="true"></i></span><span class="user-name">Ion D.</span><span class="user-status user-away">away</span></li>
+          <li class="user-item"><span class="user-avatar"><i class="fas fa-user-circle" aria-hidden="true"></i></span><span class="user-name">Elena M.</span><span class="user-status user-online">online</span></li>
+          <li class="user-item user-more"><span class="user-avatar"><i class="fas fa-ellipsis" aria-hidden="true"></i></span><span class="user-name">+ 42 altii</span><span class="user-status user-online">online</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════════ ZONA 6 — DATE & STATISTICI ══════ -->
+    <section class="zone zone-6" id="testimoniale">
+      <h2><i class="fas fa-chart-bar" aria-hidden="true"></i> Date &amp; Statistici</h2>
+      <div class="stats-dashboard">
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-shopping-cart" aria-hidden="true"></i></div><div class="stat-info"><strong class="stat-number">1,247</strong><span class="stat-desc">Comenzi luna aceasta</span><div class="stat-bar-wrap"><div class="stat-bar-track"><div class="stat-bar-fill" style="width:75%"></div></div><span class="stat-percent">75%</span></div></div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-eye" aria-hidden="true"></i></div><div class="stat-info"><strong class="stat-number">8,934</strong><span class="stat-desc">Vizitatori unici / luna</span><div class="stat-bar-wrap"><div class="stat-bar-track"><div class="stat-bar-fill" style="width:89%"></div></div><span class="stat-percent">89%</span></div></div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-star" aria-hidden="true"></i></div><div class="stat-info"><strong class="stat-number">4.9 / 5</strong><span class="stat-desc">Rating mediu clienti</span></div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-box-open" aria-hidden="true"></i></div><div class="stat-info"><strong class="stat-number">500+</strong><span class="stat-desc">Produse in catalog</span></div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-users" aria-hidden="true"></i></div><div class="stat-info"><strong class="stat-number">10,000+</strong><span class="stat-desc">Clienti inregistrati</span></div></div>
+      </div>
+    </section>
+
+    <!-- ══════════════ ZONA 7 — DATE SITE & SERVER ════ -->
+    <section class="zone zone-7" id="linkuri">
+      <h2><i class="fas fa-server" aria-hidden="true"></i> Date Site &amp; Server</h2>
+      <div class="server-panel">
+        <div class="server-status-row">
+          <span class="status-dot-green" aria-hidden="true"></span>
+          <strong>Server: ONLINE</strong>
+        </div>
+        <table class="server-table">
+          <tbody>
+            <tr><th scope="row"><i class="fas fa-clock" aria-hidden="true"></i> Uptime</th><td>99.9%</td></tr>
+            <tr><th scope="row"><i class="fas fa-code" aria-hidden="true"></i> Tehnologie</th><td>Node.js / Express / EJS</td></tr>
+            <tr><th scope="row"><i class="fas fa-calendar" aria-hidden="true"></i> Actualizare</th><td><time datetime="2025-04-02">2 apr 2025</time></td></tr>
+            <tr><th scope="row"><i class="fas fa-eye" aria-hidden="true"></i> Vizitatori azi</th><td>342</td></tr>
+            <tr><th scope="row"><i class="fas fa-database" aria-hidden="true"></i> Baza de date</th><td>PostgreSQL 15</td></tr>
+            <!-- req 16: ip-ul utilizatorului afisat prin program -->
+            <tr>
+              <th scope="row"><i class="fas fa-network-wired" aria-hidden="true"></i> IP utilizator</th>
+              <td><%= typeof ip !== 'undefined' ? ip : 'N/A' %></td>
+            </tr>
+          </tbody>
+        </table>
+        <h3><i class="fas fa-link" aria-hidden="true"></i> Resurse externe</h3>
+        <ul class="server-links">
+          <li><a href="https://www.hillspet.com/pet-care" target="_blank"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Ghidul de ingrijire Hill's Pet</a></li>
+          <li><a href="https://app.neilpatel.com/en/ubersuggest/keyword_ideas" target="_blank"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Ubersuggest Keyword Research</a></li>
+        </ul>
+      </div>
+    </section>
+
+  </div><!-- /.page-grid -->
+
+  <!-- galerie-statica: fragment inclus (nu duplicat) -->
+  <%- include('../fragmente/galerie') %>
+
+  <map name="petmap">
+    <area alt="Dog Zone" coords="20,20,200,200" href="#promotii" shape="rect">
+    <area alt="Cat Zone" coords="220,20,400,200" href="#categorii" shape="rect">
+    <area alt="Bird Cages" coords="420,20,600,200" href="#testimoniale" shape="rect">
+    <area alt="Fish Tanks" coords="620,20,800,200" href="#linkuri" shape="rect">
+    <area alt="Reptile Area" coords="820,20,1000,200" href="#program" shape="rect">
+  </map>
+</main>
+
+<%- include('../fragmente/footer') %>
+</body>
+</html>

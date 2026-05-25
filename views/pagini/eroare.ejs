@@ -1,0 +1,34 @@
+<%- include('../fragmente/head', {titlu: typeof titlu !== 'undefined' ? titlu : 'Eroare - PETHUB'}) %>
+<body id="top">
+  <%- include('../fragmente/header') %>
+
+  <main>
+    <div class="page-grid">
+      <section class="zone" style="text-align:center; padding: 3rem 2rem;">
+
+        <!-- imaginea erorii - preluata din locals (req 12) -->
+        <% if (typeof imagine !== 'undefined' && imagine) { %>
+          <img src="<%= imagine %>" alt="<%= typeof titlu !== 'undefined' ? titlu : 'Eroare' %>"
+               style="max-width:300px; margin: 0 auto 2rem; display:block;">
+        <% } %>
+
+        <!-- titlul erorii - preluat din locals (req 12) -->
+        <h2 style="color: #F05D13; margin-bottom: 1rem;">
+          <%= typeof titlu !== 'undefined' ? titlu : 'Eroare' %>
+        </h2>
+
+        <!-- textul erorii - preluat din locals (req 12) -->
+        <p style="font-size: 1.1rem; color: #555; margin-bottom: 2rem;">
+          <%= typeof text !== 'undefined' ? text : 'A aparut o eroare neasteptata.' %>
+        </p>
+
+        <a href="/" class="btn-primary" style="display:inline-block; padding: 0.75rem 2rem; background:#F05D13; color:#fff; border-radius:0.5rem; text-decoration:none;">
+          <i class="fas fa-home"></i> Inapoi la pagina principala
+        </a>
+      </section>
+    </div>
+  </main>
+
+  <%- include('../fragmente/footer') %>
+</body>
+</html>
