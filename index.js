@@ -47,7 +47,7 @@ function compileazaScss(caleScss, caleCss) {
   }
 
   // 2. Copiere în backup înainte de compilare/suprascriere
-  if (fs.existsSync(absCss)) {
+  if (fs.existsSync(absCss) && !path.basename(absCss).startsWith("galerie_animata")) {
     const backupDir = path.join(__dirname, "backup", "resurse", "css");
     const extensie = path.extname(absCss);
     const numeBaza = path.basename(absCss, extensie);
@@ -97,6 +97,7 @@ if (fs.existsSync(global.folderScss)) {
 if (fs.existsSync(global.folderScss)) {
   fs.watch(global.folderScss, (eventType, filename) => {
     if (filename && path.extname(filename) === ".scss") {
+      if (filename.startsWith("galerie_animata")) return;
       const fullPath = path.join(global.folderScss, filename);
       if (fs.existsSync(fullPath)) {
         console.log(`[WATCH] S-a modificat/creat ${filename}. Compilare...`);
@@ -473,6 +474,119 @@ app.use("/resurse", function (req, res, next) {
 
 app.use("/resurse", express.static(path.join(__dirname, "resurse")));
 
+app.use((req, res, next) => {
+  // Rulăm logica doar când se încarcă paginile principale
+  if (req.method === 'GET' && (req.path === '/' || req.path === '/index' || req.path === '/home')) {
+    
+    // Guard în caz că nu s-a inițializat galeria
+    if (!obGlobal.obGalerie || !obGlobal.obGalerie.imagini) {
+      return next();
+    }
+
+    // 1. Alegem un număr aleator între 7 și 11, dar diferit de 10
+    const optiuniN = [7, 8, 9, 11];
+    const N = optiuniN[Math.floor(Math.random() * optiuniN.length)];
+
+    // 2. Extragem N imagini distincte amestecate din JSON
+    let imaginiGalerie = [...obGlobal.obGalerie.imagini];
+    imaginiGalerie.sort(() => 0.5 - Math.random()); // amestecăm elementele
+    res.locals.imaginiGalerieAnimata = imaginiGalerie.slice(0, N);
+    res.locals.caleGalerieAnimata = obGlobal.obGalerie.cale_galerie;
+
+    // 3. Calculăm procentele pentru animația SASS
+    let timpCadru = 3; // O imagine stă vizibilă 3 secunde
+    let timpTranzitie = 1; // 1 secundă durează animația de ieșire
+    let timpTotal = N * timpCadru;
+    
+    // Regula de 3 simplă pentru a afla procentele keyframes-urilor
+    let procVizibil = (timpCadru / timpTotal) * 100;
+    let procTurtire = procVizibil + ((timpTranzitie / 2) / timpTotal) * 100; // Jumătatea tranziției
+    let procIesire = ((timpCadru + timpTranzitie) / timpTotal) * 100;
+
+    // 4. Generăm string-ul SCSS dinamic
+    let continutScss = `
+$n: ${N};
+$timp_total: ${timpTotal}s;
+
+.galerie-animata-container {
+  width: 450px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  margin: 2rem auto;
+  border: 20px solid transparent;
+  // Border-image cu o imagine deja existentă la tine în proiect
+  border-image: url('../imagini/mapa.png') 30 stretch; 
+  
+  figure {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    margin: 0;
+    transform-origin: bottom left; // Ca să se rotească din colț
+    animation: animatieGalerie $timp_total linear infinite;
+    animation-fill-mode: both;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    figcaption {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      text-align: center;
+      padding: 0.5rem;
+    }
+  }
+
+  // Staggering dinamic (folosind clauza @for din SASS) pentru "N" imagini
+  @for $i from 1 through $n {
+    figure:nth-child(#{$i}) {
+      animation-delay: #{($n - $i) * ${timpCadru}}s;
+    }
+  }
+}
+
+@keyframes animatieGalerie {
+  0%, ${procVizibil}% {
+    transform: scaleY(1) rotate(0deg) translate(0, 0);
+    z-index: 10;
+    opacity: 1;
+  }
+  ${procTurtire}% {
+    // Cerință: Turtire pe verticală
+    transform: scaleY(0.1) rotate(0deg) translate(0, 0);
+    z-index: 10;
+    opacity: 1;
+  }
+  ${procIesire}% {
+    // Cerință: Rotirea imaginii pentru a ieși din "ecranul" galeriei
+    transform: scaleY(0.1) rotate(45deg) translate(-200%, 200%);
+    z-index: -10;
+    opacity: 0;
+  }
+  ${procIesire + 0.001}%, 100% {
+    // Întoarcerea pe ascuns în poziția inițială, la coadă
+    transform: scaleY(1) rotate(0deg) translate(0, 0);
+    z-index: -10;
+    opacity: 0;
+  }
+}
+`;
+    // 5. Salvăm fișierul SCSS și îl compilăm pe loc
+    const caleScssDinamic = path.join(global.folderScss, "galerie_animata.scss");
+    fs.writeFileSync(caleScssDinamic, continutScss, "utf-8");
+    
+    // Ne folosim exact de funcția ta deja implementată!
+    compileazaScss("galerie_animata.scss");
+  }
+  next();
+});
+
 app.get(/\.ejs$/i, function (req, res) {
   return afisareEroare(res, 400);
 });
@@ -525,6 +639,7 @@ app.get("/*", function (req, res) {
 // ═══════════════════════════════════════════════════════════════════════
 // PORNIRE SERVER
 // ═══════════════════════════════════════════════════════════════════════
+// server port startup logger
 app.listen(PORT, function () {
   console.log("server pornit: http://localhost:" + PORT);
 });

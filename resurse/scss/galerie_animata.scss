@@ -1,0 +1,72 @@
+
+$n: 11;
+$timp_total: 33s;
+
+.galerie-animata-container {
+  width: 450px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  margin: 2rem auto;
+  border: 20px solid transparent;
+  // Border-image cu o imagine deja existentă la tine în proiect
+  border-image: url('../imagini/mapa.png') 30 stretch; 
+  
+  figure {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    margin: 0;
+    transform-origin: bottom left; // Ca să se rotească din colț
+    animation: animatieGalerie $timp_total linear infinite;
+    animation-fill-mode: both;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    figcaption {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      text-align: center;
+      padding: 0.5rem;
+    }
+  }
+
+  // Staggering dinamic (folosind clauza @for din SASS) pentru "N" imagini
+  @for $i from 1 through $n {
+    figure:nth-child(#{$i}) {
+      animation-delay: #{($n - $i) * 3}s;
+    }
+  }
+}
+
+@keyframes animatieGalerie {
+  0%, 9.090909090909092% {
+    transform: scaleY(1) rotate(0deg) translate(0, 0);
+    z-index: 10;
+    opacity: 1;
+  }
+  10.606060606060607% {
+    // Cerință: Turtire pe verticală
+    transform: scaleY(0.1) rotate(0deg) translate(0, 0);
+    z-index: 10;
+    opacity: 1;
+  }
+  12.121212121212121% {
+    // Cerință: Rotirea imaginii pentru a ieși din "ecranul" galeriei
+    transform: scaleY(0.1) rotate(45deg) translate(-200%, 200%);
+    z-index: -10;
+    opacity: 0;
+  }
+  12.12221212121212%, 100% {
+    // Întoarcerea pe ascuns în poziția inițială, la coadă
+    transform: scaleY(1) rotate(0deg) translate(0, 0);
+    z-index: -10;
+    opacity: 0;
+  }
+}

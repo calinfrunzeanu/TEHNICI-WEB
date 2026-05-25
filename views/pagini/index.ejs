@@ -375,6 +375,25 @@
 
   </div><!-- /.page-grid -->
 
+  <!-- galerie-animata: stylesheet -->
+  <link rel="stylesheet" href="/resurse/css/galerie_animata.css">
+
+  <section class="zone" id="galerie-bonus" style="margin: 2rem 0; padding: 2rem;">
+    <h2><i class="fas fa-film" aria-hidden="true"></i> Galerie Animată (Bonus 1)</h2>
+    <p class="text-center text-muted">La fiecare încărcare, galeria afișează un număr aleator de imagini (între 7 și 11, excepție 10).</p>
+    
+    <div class="galerie-animata-container shadow">
+      <% if (typeof imaginiGalerieAnimata !== 'undefined') { %>
+        <% imaginiGalerieAnimata.forEach(function(img) { %>
+          <figure>
+            <img src="<%- caleGalerieAnimata %>/<%- img.cale_imagine %>" alt="<%- img.alt %>">
+            <figcaption><%- img.titlu %></figcaption>
+          </figure>
+        <% }); %>
+      <% } %>
+    </div>
+  </section>
+
   <!-- galerie-statica: fragment inclus (nu duplicat) -->
   <%- include('../fragmente/galerie') %>
 
