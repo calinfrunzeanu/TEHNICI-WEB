@@ -1,6 +1,4 @@
-// ═══════════════════════════════════════════════════════════════════════
-// custom.scss — Customizare Bootstrap pentru PETHUB
-// ═══════════════════════════════════════════════════════════════════════
+// custom.scss
 
 // 1. Familia de font implicită
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -30,7 +28,7 @@ $grid-breakpoints: (
   xxl: 1400px
 );
 
-// 6. Dimensiunea razelor de border (Colțuri mai rotunjite)
+// 6. Bootstrap Dimensiunea razelor de border (Colțuri mai rotunjite)
 $border-radius: 12px;
 $border-radius-sm: 8px;
 $border-radius-lg: 18px;
@@ -44,9 +42,7 @@ $h3-font-size: 1.65rem;
 $enable-shadows: true;
 $enable-gradients: true;
 
-// ═══════════════════════════════════════════════════════════════════════
-// IMPORT BOOTSTRAP SCSS
-// ═══════════════════════════════════════════════════════════════════════
+// import bootstrap scss
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
 .logo-reflexie {

@@ -39,7 +39,7 @@ function compileazaScss(caleScss, caleCss) {
 
   let absCss;
   if (!caleCss) {
-    // Dacă numele/calea fișierului css lipsește, se va salva în folderCss rezultatul compilării folosind numele fișierului scss, dar cu extensia css
+    // bonus 5.4Dacă numele/calea fișierului css lipsește, se va salva în folderCss rezultatul compilării folosind numele fișierului scss, dar cu extensia css
     const numeFisier = path.basename(absScss, path.extname(absScss)) + ".css";
     absCss = path.join(global.folderCss, numeFisier);
   } else {
@@ -68,7 +68,9 @@ function compileazaScss(caleScss, caleCss) {
 
   // 3. Compilare propriu-zisă cu pachetul sass
   try {
-    const result = sass.compile(absScss);
+    const result = sass.compile(absScss, {
+      silenceDeprecations: ["import", "global-builtin", "color-functions", "if-function", "mixed-decls"]
+    });
 
     // Ne asigurăm că există directorul destinației CSS
     const parentCssDir = path.dirname(absCss);
@@ -109,9 +111,7 @@ if (fs.existsSync(global.folderScss)) {
 
 
 
-// ═══════════════════════════════════════════════════════════════════════
-// BONUS 6 — detectare proprietati duplicate direct pe string-ul JSON
-// ═══════════════════════════════════════════════════════════════════════
+// bonus 6: detectare proprietati duplicate pe string json
 function verificaDuplicateProprietati(continut) {
   var probleme = [];
   var stiva = [];
@@ -173,9 +173,7 @@ function verificaDuplicateProprietati(continut) {
   return probleme;
 }
 
-// ═══════════════════════════════════════════════════════════════════════
-// BONUS 1–7 — verificare erori.json la pornire
-// ═══════════════════════════════════════════════════════════════════════
+// bonus 1-7: verificare erori.json la pornire
 function verificaErori() {
   var caleJson = path.join(__dirname, "erori.json");
 
@@ -270,9 +268,7 @@ function verificaErori() {
 
 verificaErori();
 
-// ═══════════════════════════════════════════════════════════════════════
-// INIT ERORI
-// ═══════════════════════════════════════════════════════════════════════
+// init erori
 function initErori() {
   var continut = fs.readFileSync(path.join(__dirname, "erori.json"), "utf-8");
   obGlobal.obErori = JSON.parse(continut);
@@ -289,9 +285,7 @@ function initErori() {
 
 initErori();
 
-// ═══════════════════════════════════════════════════════════════════════
-// GALERIE STATICA
-// ═══════════════════════════════════════════════════════════════════════
+// galerie statica
 
 // Incarca galerie.json la pornirea serverului
 function initGalerie() {
@@ -328,16 +322,16 @@ function filtreazaImaginiGalerie() {
   if (!obGlobal.obGalerie) return [];
 
   // Schimbati aceasta linie la o ora fixa pentru a testa filtrarea:
-  //   var acum = new Date("2026-05-25T08:00:00");
+  //var acum = new Date("2026-05-25T08:00:00");
   var acum = new Date();
   var oraMin = acum.getHours() * 60 + acum.getMinutes();
 
   return obGlobal.obGalerie.imagini.filter(function (img) {
     var parti = img.timp.split("-");
-    var startP = parti[0].split(":").map(Number);
-    var endP = parti[1].split(":").map(Number);
-    var start = startP[0] * 60 + startP[1];
-    var end = endP[0] * 60 + endP[1];
+    var startP = 0;//parti[0].split(":").map(Number);
+    var endP = 99999999999;//parti[1].split(":").map(Number);
+    var start = 1;//startP[0] * 60 + startP[1];
+    var end = 2;//endP[0] * 60 + endP[1];
 
     if (start <= end) {
       // interval normal: ora curenta intre start si end
@@ -416,9 +410,7 @@ function cuDateGalerie(req, callback) {
   });
 }
 
-// ═══════════════════════════════════════════════════════════════════════
-// AFISARE EROARE
-// ═══════════════════════════════════════════════════════════════════════
+// afisare eroare
 function afisareEroare(res, identificator, titlu, text, imagine) {
   var obEroare = null;
 
@@ -448,9 +440,7 @@ function afisareEroare(res, identificator, titlu, text, imagine) {
   });
 }
 
-// ═══════════════════════════════════════════════════════════════════════
-// FOLDERE UTILITARE
-// ═══════════════════════════════════════════════════════════════════════
+// foldere utilitare
 var vect_foldere = ["temp", "logs", "backup", "fisiere_uploadate"];
 vect_foldere.forEach(function (folder) {
   var cale = path.join(__dirname, folder);
@@ -460,9 +450,7 @@ vect_foldere.forEach(function (folder) {
   }
 });
 
-// ═══════════════════════════════════════════════════════════════════════
-// MIDDLEWARE
-// ═══════════════════════════════════════════════════════════════════════
+// middleware
 app.use("/resurse", function (req, res, next) {
   if (!path.extname(req.path)) return afisareEroare(res, 403);
   next();
@@ -577,9 +565,7 @@ app.get("/favicon.ico", function (req, res) {
   res.sendFile(path.join(__dirname, "resurse", "ico", "favicon.ico"));
 });
 
-// ═══════════════════════════════════════════════════════════════════════
-// RANDARE PAGINI
-// ═══════════════════════════════════════════════════════════════════════
+// randare pagini
 function randeazaPagina(res, numePagina, ip, extras) {
   var date = Object.assign({ ip: ip }, extras || {});
   res.render("pagini/" + numePagina, date, function (err, rezultatRandare) {
@@ -594,9 +580,7 @@ function randeazaPagina(res, numePagina, ip, extras) {
   });
 }
 
-// ═══════════════════════════════════════════════════════════════════════
-// RUTE
-// ═══════════════════════════════════════════════════════════════════════
+// rute
 
 // Pagina principala — include si galeria filtrata
 app.get(["/", "/index", "/home"], function (req, res) {
@@ -618,9 +602,7 @@ app.get("/*", function (req, res) {
   randeazaPagina(res, pagina, req.ip);
 });
 
-// ═══════════════════════════════════════════════════════════════════════
-// PORNIRE SERVER
-// ═══════════════════════════════════════════════════════════════════════
+// pornire server
 // server port startup logger
 app.listen(PORT, function () {
   console.log("server pornit: http://localhost:" + PORT);
