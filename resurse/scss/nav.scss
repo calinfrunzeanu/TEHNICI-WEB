@@ -10,6 +10,28 @@ body {
   --subnav-text-outline: rgba(237, 45, 7, 0.4);
 }
 
+[data-bs-theme="dark"], body.dark-theme {
+  --nav-bg: #1f1f1f;
+  --nav-text: #e0e0e0;
+  --nav-hover-bg: #333333;
+  --subnav-bg: #2c2c2c;
+  --subnav-text: #f0cbb5;
+  --subnav-hover-bg: #3a3a3a;
+  --subnav-hover-text: #fff;
+  --subnav-text-outline: rgba(240, 203, 181, 0.3);
+}
+
+body.theme-ocean {
+  --nav-bg: #0f172a;
+  --nav-text: #e2e8f0;
+  --nav-hover-bg: #1e293b;
+  --subnav-bg: #1e293b;
+  --subnav-text: #38bdf8;
+  --subnav-hover-bg: #334155;
+  --subnav-hover-text: #7dd3fc;
+  --subnav-text-outline: rgba(56, 189, 248, 0.2);
+}
+
 .site-header {
   background-color: var(--nav-bg);
   padding: 1rem 1.5rem;
@@ -368,8 +390,8 @@ body {
 }
 
 .scroll-tooltip {
-  position: absolute; bottom: 4.375rem; background: #fff; color: #333;
-  padding: 0.3125rem 0.75rem; border: 1px solid #ccc; border-radius: 0.3125rem;
+  position: absolute; bottom: 4.375rem; background: var(--bg-card); color: var(--text-site);
+  padding: 0.3125rem 0.75rem; border: 1px solid var(--border-soft); border-radius: 0.3125rem;
   font-size: 0.875rem; white-space: nowrap; opacity: 0; pointer-events: none;
   transition: opacity 0.3s ease; box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0,0,0,0.1);
 }

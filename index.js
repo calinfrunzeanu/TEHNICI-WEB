@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const sharp = require("sharp");
 const sass = require("sass");
+const db = require("./db");
 
 console.log("__dirname:", __dirname);
 console.log("__filename:", __filename);
@@ -16,10 +17,21 @@ const PORT = 8080;
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+
+
 var obGlobal = {
   obErori: null,
-  obGalerie: null
+  obGalerie: null,
+  categoriiProduse: null
 };
+
+const produseDemo = [
+  { id: 1, nume: 'Hrana uscata premium pentru caini adulti', descriere: 'Formula completa pentru caini adulti.', imagine: '/resurse/imagini/produse/hrana_caini_5kg.jpg', categorie_mare: 'Caini', subcategorie: 'Adult', pret: 189, cantitate: 7500, data_adaugare: '2025-09-15', culoare: 'Maro', ingrediente: 'pui, orez, vitamine', livrare_posta: true, producator: 'PetHub Premium', tara_origine: 'Romania', promotie: 'Reducere 5%', garantie: '24 luni', recomandat: 'Caini adulti', specificatii: ['Proteine 26%', 'Fibre 4%', 'Omega 3 si 6'] },
+  { id: 2, nume: 'Jucarie minge rezistenta pentru caini', descriere: 'Minge rezistenta pentru fetch.', imagine: '/resurse/imagini/produse/minge_caini.jpg', categorie_mare: 'Caini', subcategorie: 'Accesorii', pret: 35, cantitate: 200, data_adaugare: '2025-10-01', culoare: 'Portocaliu', ingrediente: 'cauciuc natural', livrare_posta: true, producator: 'TuffPlay', tara_origine: 'Germania', promotie: 'Livrare gratuita', garantie: '12 luni', recomandat: 'Caini activi', specificatii: ['Diametru 8 cm', 'Rezistenta la muscaturi'] },
+  { id: 3, nume: 'Litiera automata pentru pisici', descriere: 'Litiera cu curatare automata.', imagine: '/resurse/imagini/produse/litiera_pisici.jpg', categorie_mare: 'Pisici', subcategorie: 'Igiena', pret: 62, cantitate: 10, data_adaugare: '2025-11-03', culoare: 'Alb', ingrediente: 'ABS, carbon', livrare_posta: true, producator: 'CleanPet', tara_origine: 'Olanda', promotie: 'Kit de curatare', garantie: '18 luni', recomandat: 'Pisici de apartament', specificatii: ['Senzor de prezenta', 'Curatare automata'] },
+  { id: 4, nume: 'Acvariu starter kit 80L', descriere: 'Acvariu complet pentru pesti tropicali.', imagine: '/resurse/imagini/produse/acvariu_80l.jpg', categorie_mare: 'Pesti', subcategorie: 'Habitat', pret: 245, cantitate: 80000, data_adaugare: '2025-10-12', culoare: 'Transparent', ingrediente: 'sticla, filtru, incalzitor', livrare_posta: false, producator: 'AquaLife', tara_origine: 'Belgia', promotie: 'Pachet complet', garantie: '24 luni', recomandat: 'Pesti tropicali', specificatii: ['Filtru extern 200L/h', 'Incalzitor 100W'] },
+  { id: 5, nume: 'Cusca rozatoare deluxe', descriere: 'Cusca spatioasa pentru rozatoare.', imagine: '/resurse/imagini/produse/cusca_rozatoare.jpg', categorie_mare: 'Rozatoare', subcategorie: 'Habitat', pret: 138, cantitate: 2800, data_adaugare: '2025-11-17', culoare: 'Gri', ingrediente: 'metal, plastic', livrare_posta: true, producator: 'SmallPet', tara_origine: 'Polonia', promotie: 'Set de accesorii', garantie: '12 luni', recomandat: 'Rozatoare mici', specificatii: ['Tava detasabila', 'Ventilatie buna'] }
+];
 
 global.folderScss = path.join(__dirname, "resurse", "scss");
 global.folderCss = path.join(__dirname, "resurse", "css");
@@ -28,25 +40,26 @@ if (!fs.existsSync(global.folderScss)) {
   fs.mkdirSync(global.folderScss, { recursive: true });
 }
 
+//5. 1. b
 function compileazaScss(caleScss, caleCss) {
   if (!caleScss) {
-    console.error("[COMPILARE SCSS] Calea fișierului SCSS este obligatorie!");
+    console.error("[COMPILARE SCSS] Calea fisierului SCSS este obligatorie!");
     return;
   }
 
-  // 1. Rezolvare căi absolute / relative
+  // 1. verific si rezolv calea relativ/abs
   const absScss = path.isAbsolute(caleScss) ? caleScss : path.join(global.folderScss, caleScss);
 
   let absCss;
   if (!caleCss) {
-    // bonus 5.4Dacă numele/calea fișierului css lipsește, se va salva în folderCss rezultatul compilării folosind numele fișierului scss, dar cu extensia css
+    // bonus 5.4Daca numele/calea fisierului css lipseste, se va salva in folderCss rezultatul compilarii folosind numele fisierului scss, dar cu extensia css
     const numeFisier = path.basename(absScss, path.extname(absScss)) + ".css";
     absCss = path.join(global.folderCss, numeFisier);
   } else {
     absCss = path.isAbsolute(caleCss) ? caleCss : path.join(global.folderCss, caleCss);
   }
 
-  // backup css
+  // 5.1.c backup css
   if (fs.existsSync(absCss) && !path.basename(absCss).startsWith("galerie_animata")) {
     const backupDir = path.join(__dirname, "backup", "resurse", "css");
     const extensie = path.extname(absCss);
@@ -60,19 +73,19 @@ function compileazaScss(caleScss, caleCss) {
         fs.mkdirSync(backupDir, { recursive: true });
       }
       fs.copyFileSync(absCss, destBackup);
-      console.log(`[BACKUP] Am copiat backup pentru ${path.basename(absCss)} în ${destBackup}`);
+      console.log(`[BACKUP] Am copiat backup pentru ${path.basename(absCss)} in ${destBackup}`);
     } catch (err) {
-      console.error(`[BACKUP EROARE] Eșec la copierea fișierului ${absCss} în backup:`, err.message);
+      console.error(`[BACKUP EROARE] Esec la copierea fisierului ${absCss} in backup:`, err.message);
     }
   }
 
-  // 3. Compilare propriu-zisă cu pachetul sass
+  // 3. Compilare propriu-zisa cu pachetul sass
   try {
     const result = sass.compile(absScss, {
       silenceDeprecations: ["import", "global-builtin", "color-functions", "if-function", "mixed-decls"]
     });
 
-    // Ne asigurăm că există directorul destinației CSS
+    // Ne asiguram ca exista directorul destinatiei CSS
     const parentCssDir = path.dirname(absCss);
     if (!fs.existsSync(parentCssDir)) {
       fs.mkdirSync(parentCssDir, { recursive: true });
@@ -81,11 +94,11 @@ function compileazaScss(caleScss, caleCss) {
     fs.writeFileSync(absCss, result.css, "utf-8");
     console.log(`[COMPILARE SCSS] Succes: ${absScss} -> ${absCss}`);
   } catch (err) {
-    console.error(`[COMPILARE SCSS EROARE] Eșec la compilarea ${absScss}:`, err.message);
+    console.error(`[COMPILARE SCSS EROARE] Esec la compilarea ${absScss}:`, err.message);
   }
 }
 
-// Compilare inițială a scss-urilor din folderScss
+// 5.1.d Compilare initiala a scss-urilor din folderScss
 if (fs.existsSync(global.folderScss)) {
   const files = fs.readdirSync(global.folderScss);
   files.forEach(file => {
@@ -315,23 +328,19 @@ function initGalerie() {
 
 initGalerie();
 
-// Filtreaza imaginile dupa ora curenta a serverului (max 10).
-// Intervalele pot fi intre doua ore din aceeasi zi (ex. "09:00-15:00").
-// Daca intervalul trece de miezul noptii (start > end), se trateaza ca wrap.
 function filtreazaImaginiGalerie() {
   if (!obGlobal.obGalerie) return [];
 
-  // Schimbati aceasta linie la o ora fixa pentru a testa filtrarea:
-  //var acum = new Date("2026-05-25T08:00:00");
+  /*
   var acum = new Date();
   var oraMin = acum.getHours() * 60 + acum.getMinutes();
 
   return obGlobal.obGalerie.imagini.filter(function (img) {
     var parti = img.timp.split("-");
-    var startP = 0;//parti[0].split(":").map(Number);
-    var endP = 99999999999;//parti[1].split(":").map(Number);
-    var start = 1;//startP[0] * 60 + startP[1];
-    var end = 2;//endP[0] * 60 + endP[1];
+    var startP = parti[0].split(":").map(Number);
+    var endP = parti[1].split(":").map(Number);
+    var start = startP[0] * 60 + startP[1];
+    var end = endP[0] * 60 + endP[1];
 
     if (start <= end) {
       // interval normal: ora curenta intre start si end
@@ -340,13 +349,14 @@ function filtreazaImaginiGalerie() {
       // interval ce trece de miezul noptii (ex. "22:00-02:00")
       return oraMin >= start || oraMin <= end;
     }
-  }).slice(0, 10); // trunchiem la maxim 10 imagini
+  }).slice(0, 10);
+  */
+
+  return obGlobal.obGalerie.imagini.slice(0, 10);
 }
 
 // Genereaza imagini responsive cu sharp la prima cerere.
-// Variante generate:
-//   .../mediu/<numeImagine>  — 300px latime (ecran mediu)
-//   .../mic/<numeImagine>    — 150px latime (ecran mic)
+
 function genereazaImaginiResponsive(imagini, callback) {
   if (!obGlobal.obGalerie) return callback(null);
 
@@ -458,6 +468,43 @@ app.use("/resurse", function (req, res, next) {
 
 app.use("/resurse", express.static(path.join(__dirname, "resurse")));
 
+async function getCategoriiProduse() {
+  if (obGlobal.categoriiProduse && obGlobal.categoriiProduse.length) {
+    return obGlobal.categoriiProduse;
+  }
+
+  try {
+    const [rows] = await db.query("SHOW COLUMNS FROM produse LIKE 'categorie_mare'");
+    const tip = rows && rows[0] && rows[0].Type ? rows[0].Type : "";
+    const valori = tip.match(/enum\((.*)\)/i);
+    if (!valori || !valori[1]) {
+      obGlobal.categoriiProduse = [];
+      return obGlobal.categoriiProduse;
+    }
+
+    obGlobal.categoriiProduse = valori[1]
+      .split(",")
+      .map(item => item.trim().replace(/^'|'$/g, ""))
+      .filter(Boolean);
+
+    return obGlobal.categoriiProduse;
+  } catch (err) {
+    console.error("Eroare la citirea categoriilor produselor:", err.message);
+  }
+
+  obGlobal.categoriiProduse = [...new Set(produseDemo.map(item => item.categorie_mare))];
+  return obGlobal.categoriiProduse;
+}
+
+app.use(async function (req, res, next) {
+  try {
+    res.locals.categoriiProduse = await getCategoriiProduse();
+  } catch (err) {
+    res.locals.categoriiProduse = [];
+  }
+  next();
+});
+
 app.use((req, res, next) => {
   if (req.method === 'GET' && (req.path === '/' || req.path === '/index' || req.path === '/home')) {
     
@@ -540,8 +587,8 @@ $timp_total: ${timpTotal}s;
   }
   ${procIesire}% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
-    transform: rotate(-90deg) translate(-50%, 0);
-    opacity: 0;
+    transform: rotate(90deg) translate(0, 0);
+    opacity: 1;
   }
   ${procIesire + 0.001}%, 100% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
@@ -594,6 +641,249 @@ app.get("/galerie", function (req, res) {
   cuDateGalerie(req, function (extras) {
     randeazaPagina(res, "galerie", req.ip, extras);
   });
+});
+
+app.get("/produse", async function (req, res) {
+  var categorie = typeof req.query.categorie === "string" ? req.query.categorie.trim() : "";
+
+  try {
+    const query = categorie
+      ? "SELECT * FROM produse WHERE categorie_mare = ? ORDER BY id"
+      : "SELECT * FROM produse ORDER BY id";
+
+    const params = categorie ? [categorie] : [];
+    var [rows] = await db.query(query, params);
+
+    // extragem valorile unice pt filtre
+    var [allRows] = await db.query("SELECT DISTINCT culoare FROM produse ORDER BY culoare");
+    var culoriUnice = allRows.map(r => r.culoare);
+    var [prodRows] = await db.query("SELECT DISTINCT producator FROM produse ORDER BY producator");
+    var producatoriUnici = prodRows.map(r => r.producator);
+
+    // pretul maxim si minim
+    var [pretAgregat] = await db.query("SELECT MIN(pret) as minP, MAX(pret) as maxP FROM produse");
+    var minPret = pretAgregat[0] && pretAgregat[0].minP != null ? Number(pretAgregat[0].minP) : 0;
+    var maxPret = pretAgregat[0] && pretAgregat[0].maxP != null ? Number(pretAgregat[0].maxP) : 1000;
+
+    // lungime nume pt input text
+    var [numeAgregat] = await db.query("SELECT MIN(LENGTH(nume)) as minL, MAX(LENGTH(nume)) as maxL FROM produse");
+    var minNumeLen = numeAgregat[0] && numeAgregat[0].minL != null ? Number(numeAgregat[0].minL) : 3;
+    var maxNumeLen = numeAgregat[0] && numeAgregat[0].maxL != null ? Number(numeAgregat[0].maxL) : 100;
+
+    // lungime descriere pt textarea
+    var [descAgregat] = await db.query("SELECT MIN(LENGTH(descriere)) as minD, MAX(LENGTH(descriere)) as maxD FROM produse");
+    var minDescLen = descAgregat[0] && descAgregat[0].minD != null ? Number(descAgregat[0].minD) : 3;
+    var maxDescLen = descAgregat[0] && descAgregat[0].maxD != null ? Number(descAgregat[0].maxD) : 500;
+
+    // cate produse au livrare_posta
+    var [livrareRows] = await db.query("SELECT COUNT(*) as cnt FROM produse WHERE livrare_posta = 1");
+    var countLivrare = livrareRows[0] ? Number(livrareRows[0].cnt) : 0;
+
+    // luni unice adaugare
+    var [luniRows] = await db.query("SELECT DISTINCT MONTH(data_adaugare) as lunaNum FROM produse WHERE data_adaugare IS NOT NULL ORDER BY lunaNum");
+    var luniUnice = luniRows.map(r => r.lunaNum - 1); // JS months are 0-indexed
+
+    randeazaPagina(res, "produse", req.ip, {
+      produse: rows,
+      categorieFiltrata: categorie || null,
+      culoriUnice: culoriUnice,
+      producatoriUnici: producatoriUnici,
+      minPret: minPret,
+      maxPret: maxPret,
+      minNumeLen: minNumeLen,
+      maxNumeLen: maxNumeLen,
+      minDescLen: minDescLen,
+      maxDescLen: maxDescLen,
+      countLivrare: countLivrare,
+      luniUnice: luniUnice
+    });
+  } catch (err) {
+    console.error("Eroare interogare produse:", err.message);
+    const produse = categorie
+      ? produseDemo.filter(item => item.categorie_mare === categorie)
+      : produseDemo;
+
+    var culoriUnice = [...new Set(produseDemo.map(p => p.culoare))].sort();
+    var producatoriUnici = [...new Set(produseDemo.map(p => p.producator))].sort();
+    var minPret = Math.min(...produseDemo.map(p => p.pret));
+    var maxPret = Math.max(...produseDemo.map(p => p.pret));
+    var minNumeLen = Math.min(...produseDemo.map(p => p.nume.length));
+    var maxNumeLen = Math.max(...produseDemo.map(p => p.nume.length));
+    var minDescLen = Math.min(...produseDemo.map(p => p.descriere.length));
+    var maxDescLen = Math.max(...produseDemo.map(p => p.descriere.length));
+    var countLivrare = produseDemo.filter(p => p.livrare_posta).length;
+    var luniUnice = [...new Set(produseDemo.map(p => new Date(p.data_adaugare).getMonth()))].sort((a,b)=>a-b);
+
+    randeazaPagina(res, "produse", req.ip, {
+      produse,
+      categorieFiltrata: categorie || null,
+      culoriUnice: culoriUnice,
+      producatoriUnici: producatoriUnici,
+      minPret: minPret,
+      maxPret: maxPret,
+      minNumeLen: minNumeLen,
+      maxNumeLen: maxNumeLen,
+      minDescLen: minDescLen,
+      maxDescLen: maxDescLen,
+      countLivrare: countLivrare,
+      luniUnice: luniUnice
+    });
+  }
+});
+
+app.post("/produse-ajax", express.json(), async function (req, res) {
+  try {
+    let query = "SELECT * FROM produse WHERE 1=1";
+    let params = [];
+
+    // Nume
+    if (req.body.nume) {
+      query += " AND LOWER(nume) LIKE ?";
+      params.push('%' + req.body.nume.toLowerCase() + '%');
+    }
+
+    // Pret maxim
+    if (req.body.pretMax) {
+      query += " AND pret <= ?";
+      params.push(req.body.pretMax);
+    }
+
+    // Producator
+    if (req.body.producator) {
+      query += " AND LOWER(producator) LIKE ?";
+      params.push('%' + req.body.producator.toLowerCase() + '%');
+    }
+
+    // Culoare
+    if (req.body.culoare && req.body.culoare !== 'toate') {
+      query += " AND culoare = ?";
+      params.push(req.body.culoare);
+    }
+
+    // Categorie
+    if (req.body.categorie) {
+      query += " AND categorie_mare = ?";
+      params.push(req.body.categorie);
+    }
+
+    // Luni
+    if (req.body.luni && req.body.luni.length > 0) {
+      let months = req.body.luni.map(m => parseInt(m, 10) + 1);
+      query += " AND MONTH(data_adaugare) IN (" + months.map(() => "?").join(",") + ")";
+      params.push(...months);
+    }
+
+    // Livrare prin posta (discount toggle in UI)
+    if (req.body.discount) {
+      query += " AND livrare_posta = 1";
+    }
+
+    // Descriere (cuvinte cheie multiple)
+    if (req.body.descriere) {
+      let words = req.body.descriere.split(/[,\s]+/).filter(Boolean);
+      words.forEach(w => {
+        query += " AND LOWER(descriere) LIKE ?";
+        params.push('%' + w.toLowerCase() + '%');
+      });
+    }
+
+    // Sortare
+    let sortOrd = req.body.ordine === 'desc' ? 'DESC' : 'ASC';
+    
+    // Mapare chei frontend -> SQL
+    const mapKeys = {
+      'pret': 'pret',
+      'nume': 'nume',
+      'luna': 'MONTH(data_adaugare)',
+      'nr-ingrediente': '(LENGTH(ingrediente) - LENGTH(REPLACE(ingrediente, ",", "")) + 1)'
+    };
+    
+    let k1 = mapKeys[req.body.cheie1] || 'pret';
+    let k2 = mapKeys[req.body.cheie2] || 'nume';
+    
+    query += ` ORDER BY ${k1} ${sortOrd}, ${k2} ${sortOrd}`;
+
+    const [rows] = await db.query(query, params);
+    
+    let html = "";
+    for (let i = 0; i < rows.length; i++) {
+      html += await new Promise((resolve, reject) => {
+        res.app.render("fragmente/produs_card", { produs: rows[i] }, (err, str) => {
+          if (err) reject(err); else resolve(str);
+        });
+      });
+    }
+
+    res.json({ html: html, count: rows.length });
+  } catch (err) {
+    console.error("Eroare AJAX produse:", err.message);
+    res.status(500).json({ error: "Eroare la procesarea cererii server-side" });
+  }
+});
+
+app.get("/produse/:id", async function (req, res) {
+  var id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    return afisareEroare(res, 404);
+  }
+
+  try {
+    var [rows] = await db.query(
+      "SELECT id, nume, descriere, imagine, categorie_mare, subcategorie, pret, cantitate, data_adaugare, culoare, ingrediente, livrare_posta, producator, tara_origine, promotie, garantie, recomandat, specificatii FROM produse WHERE id = ?",
+      [id]
+    );
+
+    if (!rows || rows.length === 0) {
+      throw new Error("Produsul nu exista.");
+    }
+
+    var produs = rows[0];
+    if (produs.specificatii && typeof produs.specificatii === "string") {
+      produs.specificatii = produs.specificatii.split(/\s*,\s*/).filter(Boolean);
+    }
+
+    // Bonus 9: Imagini carusel deduse din folder
+    var imagini_carusel = [produs.imagine];
+    var extensie = path.extname(produs.imagine);
+    var baza = path.basename(produs.imagine, extensie);
+    var folderAbsolut = path.join(__dirname, path.dirname(produs.imagine).replace(/^\//, ""));
+    var folderWeb = path.dirname(produs.imagine);
+
+    for (var i = 1; i <= 5; i++) {
+      var imgNouaBaza = baza + "_" + i + extensie;
+      var imgNouaAbsolut = path.join(folderAbsolut, imgNouaBaza);
+      if (fs.existsSync(imgNouaAbsolut)) {
+        imagini_carusel.push(folderWeb + "/" + imgNouaBaza);
+      }
+    }
+    produs.imagini_carusel = imagini_carusel;
+
+    randeazaPagina(res, "produs", req.ip, { produs });
+  } catch (err) {
+    console.error("Eroare interogare produs:", err.message);
+    var produs = produseDemo.find(item => item.id === id);
+    if (!produs) {
+      return afisareEroare(res, 404);
+    }
+
+    // Bonus 9 in fallback (caz BD picata)
+    var imagini_carusel = [produs.imagine];
+    var extensie = path.extname(produs.imagine);
+    var baza = path.basename(produs.imagine, extensie);
+    var folderAbsolut = path.join(__dirname, path.dirname(produs.imagine).replace(/^\//, ""));
+    var folderWeb = path.dirname(produs.imagine);
+
+    for (var i = 1; i <= 5; i++) {
+      var imgNouaBaza = baza + "_" + i + extensie;
+      var imgNouaAbsolut = path.join(folderAbsolut, imgNouaBaza);
+      if (fs.existsSync(imgNouaAbsolut)) {
+        imagini_carusel.push(folderWeb + "/" + imgNouaBaza);
+      }
+    }
+    produs.imagini_carusel = imagini_carusel;
+
+    randeazaPagina(res, "produs", req.ip, { produs });
+  }
 });
 
 // Orice alta pagina (catch-all)

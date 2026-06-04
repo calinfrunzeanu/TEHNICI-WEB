@@ -1,0 +1,81 @@
+.galerie-animata-container {
+  width: 450px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  margin: 2rem auto;
+  border: 20px solid transparent;
+  -o-border-image: url("../imagini/mapa.png") 30 stretch;
+     border-image: url("../imagini/mapa.png") 30 stretch;
+}
+.galerie-animata-container figure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  transform-origin: center left;
+  transition: clip-path 0.3s ease;
+  animation: animatieGalerie 21s linear infinite;
+  animation-fill-mode: both;
+}
+.galerie-animata-container figure img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.galerie-animata-container figure figcaption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+  padding: 0.5rem;
+}
+.galerie-animata-container figure:nth-child(1) {
+  animation-delay: 18s;
+}
+.galerie-animata-container figure:nth-child(2) {
+  animation-delay: 15s;
+}
+.galerie-animata-container figure:nth-child(3) {
+  animation-delay: 12s;
+}
+.galerie-animata-container figure:nth-child(4) {
+  animation-delay: 9s;
+}
+.galerie-animata-container figure:nth-child(5) {
+  animation-delay: 6s;
+}
+.galerie-animata-container figure:nth-child(6) {
+  animation-delay: 3s;
+}
+.galerie-animata-container figure:nth-child(7) {
+  animation-delay: 0s;
+}
+
+@keyframes animatieGalerie {
+  0%, 14.285714285714285% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: rotate(0deg) translate(0, 0);
+    opacity: 1;
+  }
+  16.666666666666664% {
+    clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
+    transform: rotate(0deg) translate(0, 0);
+    opacity: 1;
+  }
+  19.047619047619047% {
+    clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
+    transform: rotate(-90deg) translate(-50%, 0);
+    opacity: 0;
+  }
+  19.04861904761905%, 100% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: rotate(0deg) translate(0, 0);
+    opacity: 0;
+  }
+}/*# sourceMappingURL=galerie_animata.css.map */

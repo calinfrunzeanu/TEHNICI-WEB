@@ -1,3 +1,4 @@
+@use "sass:math";
 // galerie.scss - Galerie Statica PETHUB
 
 // -- Sectiunea container
@@ -51,7 +52,7 @@
 
     @for $i from 7 through 20 {
       $slot: $i + 2;
-      $row: floor(($slot - 1) / 4) + 1;
+      $row: floor(math.div($slot - 1, 4)) + 1;
       $col: (($slot - 1) % 4) + 1;
 
       > .galerie-item:nth-child(#{$i}) {

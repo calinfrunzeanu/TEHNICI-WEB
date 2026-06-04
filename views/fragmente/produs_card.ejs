@@ -1,0 +1,69 @@
+<%
+  // formatare data in limba romana
+  var dataObj = new Date(produs.data_adaugare);
+  var zileSapt = ['Duminica', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri', 'Sambata'];
+  var luniNume = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
+  var dataFormatata = dataObj.getDate() + '-' + luniNume[dataObj.getMonth()] + '-' + dataObj.getFullYear() + ' (' + zileSapt[dataObj.getDay()] + ')';
+  var dataISO = dataObj.toISOString().split('T')[0];
+
+  // ingrediente (valori multiple)
+  var listaIngrediente = '';
+  if (produs.ingrediente && typeof produs.ingrediente === 'string') {
+    listaIngrediente = produs.ingrediente;
+  }
+
+  // categorie fara spatii (pt atributul class)
+  var categCSS = produs.categorie_mare.replace(/\s+/g, '_');
+%>
+<article id="produs_<%= produs.id %>" class="produs-card <%= categCSS %>"
+  data-pret="<%= Number(produs.pret) %>"
+  data-cantitate="<%= produs.cantitate %>"
+  data-culoare="<%= produs.culoare %>"
+  data-categorie="<%= produs.categorie_mare %>"
+  data-luna="<%= dataObj.getMonth() %>"
+  data-livrare="<%= produs.livrare_posta ? '1' : '0' %>"
+  data-ingrediente="<%= listaIngrediente %>"
+  data-producator="<%= produs.producator %>"
+  data-nr-ingrediente="<%= listaIngrediente ? listaIngrediente.split(',').length : 0 %>">
+
+  <!-- Bonus 6: Butoane Actiuni -->
+  <div class="produs-actiuni" style="position: absolute; top: 1rem; right: 1rem; display: flex; gap: 0.5rem; z-index: 5;">
+    <button class="btn btn-sm btn-outline-success btn-pin" title="Pastreaza produsul indiferent de filtre">
+      <i class="fas fa-thumbtack"></i>
+    </button>
+    <button class="btn btn-sm btn-outline-warning btn-hide-temp" title="Ascunde produsul temporar (reapare la o noua filtrare/resetare)">
+      <i class="fas fa-eye-slash"></i>
+    </button>
+    <button class="btn btn-sm btn-outline-danger btn-hide-session" title="Sterge produsul definitiv in sesiunea curenta">
+      <i class="fas fa-trash-alt"></i>
+    </button>
+  </div>
+
+  <h2 class="produs-heading"><a href="/produse/<%= produs.id %>"><%= produs.nume %></a></h2>
+
+  <div class="produs-continut">
+    <!-- COLOANA 1: imagine, categorie, pret -->
+    <div class="produs-col-1">
+      <a href="/produse/<%= produs.id %>">
+        <img src="<%= produs.imagine %>" alt="<%= produs.nume %>" class="produs-imagine" loading="lazy">
+      </a>
+      <p class="produs-categorie"><i class="fas fa-tag"></i> <%= produs.categorie_mare %> &mdash; <%= produs.subcategorie %></p>
+      <p class="produs-pret"><%= Number(produs.pret).toFixed(2) %> lei</p>
+    </div>
+
+    <!-- COLOANA 2: details cu specificatii + descriere -->
+    <div class="produs-col-2">
+      <details class="produs-details">
+        <summary>Specificatii</summary>
+        <ul class="lista-specificatii">
+          <li><b>Culoare:</b> <i><%= produs.culoare %></i></li>
+          <li><b>Ingrediente / materiale:</b> <i><%= listaIngrediente %></i></li>
+          <li><b>Cantitate in stoc:</b> <i><%= produs.cantitate %> buc.</i></li>
+          <li><b>Data adaugare:</b> <time datetime="<%= dataISO %>"><i><%= dataFormatata %></i></time></li>
+          <li><b>Livrare prin posta:</b> <i><%= produs.livrare_posta ? 'Da' : 'Nu' %></i></li>
+        </ul>
+      </details>
+      <p class="produs-descriere"><%= produs.descriere %></p>
+    </div>
+  </div>
+</article>

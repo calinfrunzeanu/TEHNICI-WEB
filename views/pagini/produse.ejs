@@ -1,0 +1,238 @@
+<%- include('../fragmente/head', {titlu: 'PETHUB - Produse'}) %>
+<link rel="stylesheet" href="/resurse/css/produse.css">
+<body id="top">
+
+<%- include('../fragmente/header') %>
+
+<main class="page-content" style="padding: 2rem 1rem; max-width: 1300px; margin: auto;">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="background: transparent; padding: 0; margin-bottom: 1.5rem;">
+      <li class="breadcrumb-item"><a href="/">Acasa</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Produse</li>
+    </ol>
+  </nav>
+
+  <header style="margin-bottom: 1.5rem;">
+    <h1 style="margin-bottom: 0.5rem;">Produse PETHUB</h1>
+    <p style="max-width: 65rem; line-height: 1.8;">Aici sunt listate produsele din baza de date. Foloseste filtrele de mai jos pentru a gasi exact ce cauti.</p>
+    <% if (categorieFiltrata) { %>
+      <p style="margin-top: 0.5rem; font-weight: 600; color: #e25b45;">Filtru server activ: <%= categorieFiltrata %></p>
+    <% } %>
+  </header>
+
+  <!-- ═══════════ SECTIUNE FILTRE (Bootstrap) ═══════════ -->
+  <section class="sectiune-filtre p-4 mb-4 bg-light border rounded" id="sectiune-filtre">
+    <h2 class="h4 mb-4 text-primary"><i class="bi bi-funnel-fill"></i> Filtre si sortare</h2>
+
+    <div class="row g-3 align-items-end">
+
+      <!-- 1. Input text — cautare dupa nume -->
+      <div class="col-12 col-md-4 col-lg-3">
+        <label for="filtru-nume" class="form-label fw-bold">Cauta dupa nume (min. <%= minNumeLen %> caractere):</label>
+        <input type="text" id="filtru-nume" class="form-control" placeholder="ex: hrana..." minlength="<%= minNumeLen %>" maxlength="<%= maxNumeLen %>">
+      </div>
+
+      <!-- 2. Input range — pret maxim -->
+      <div class="col-12 col-md-4 col-lg-3">
+        <label for="filtru-pret" class="form-label fw-bold">Pret maxim: <span id="pret-val" class="text-primary">(<%= maxPret %>)</span></label>
+        <div class="d-flex align-items-center gap-2">
+          <span class="small text-muted"><%= minPret %></span>
+          <input type="range" id="filtru-pret" class="form-range flex-grow-1" min="<%= minPret %>" max="<%= maxPret %>" value="<%= maxPret %>" step="1">
+          <span class="small text-muted"><%= maxPret %></span>
+        </div>
+      </div>
+
+      <!-- 3. Datalist — cautare dupa producator -->
+      <div class="col-12 col-md-4 col-lg-3">
+        <label for="filtru-producator" class="form-label fw-bold">Producator:</label>
+        <input type="text" id="filtru-producator" class="form-control" list="lista-producatori" placeholder="alege sau scrie...">
+        <datalist id="lista-producatori">
+          <% if (typeof producatoriUnici !== 'undefined') { %>
+            <% producatoriUnici.forEach(function(prod) { %>
+              <option value="<%= prod %>">
+            <% }); %>
+          <% } %>
+        </datalist>
+      </div>
+
+      <!-- 7. Select simplu — categorie mare -->
+      <div class="col-12 col-md-4 col-lg-3">
+        <label for="filtru-categorie" class="form-label fw-bold">Categorie:</label>
+        <select id="filtru-categorie" class="form-select">
+          <option value="" selected>Oricare</option>
+          <% if (typeof categoriiProduse !== 'undefined') { %>
+            <% categoriiProduse.forEach(function(cat) { %>
+              <option value="<%= cat %>"><%= cat %></option>
+            <% }); %>
+          <% } %>
+        </select>
+      </div>
+
+      <!-- 4. Grup radio — culoare (valoare unica) ca toggle buttons Bootstrap -->
+      <div class="col-12 col-md-12 col-lg-6">
+        <label class="form-label fw-bold d-block">Culoare:</label>
+        <div class="btn-group flex-wrap" role="group" id="radio-culoare">
+          <input type="radio" class="btn-check" name="filtru-culoare" id="culoare-toate" value="toate" autocomplete="off" checked>
+          <label class="btn btn-outline-primary mb-1" for="culoare-toate">Toate</label>
+          <% if (typeof culoriUnice !== 'undefined') { %>
+            <% culoriUnice.forEach(function(culoare, index) { %>
+              <input type="radio" class="btn-check" name="filtru-culoare" id="culoare-<%= index %>" value="<%= culoare %>" autocomplete="off">
+              <label class="btn btn-outline-primary mb-1" for="culoare-<%= index %>"><%= culoare %></label>
+            <% }); %>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- 5. Select multiplu — luna adaugare -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <label for="filtru-luna" class="form-label fw-bold">Luna adaugarii (disponibile in BD):</label>
+        <select id="filtru-luna" class="form-select" multiple size="4">
+          <% 
+            var luniNumeToate = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
+            if (typeof luniUnice !== 'undefined') {
+              luniUnice.forEach(function(luna) {
+          %>
+            <option value="<%= luna %>" selected><%= luniNumeToate[luna] %></option>
+          <% 
+              });
+            }
+          %>
+        </select>
+      </div>
+
+      <!-- 6. Checkbox — discount -->
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="form-check pt-4">
+          <input type="checkbox" class="form-check-input" id="filtru-discount">
+          <label class="form-check-label" for="filtru-discount">
+            Afiseaza doar cele cu livrare gratuita prin posta (<%= countLivrare %> in total)
+          </label>
+        </div>
+      </div>
+
+      <!-- 8. Textarea — cautare cuvinte cheie in descriere (Floating Label) -->
+      <div class="col-12">
+        <div class="form-floating mt-2">
+          <textarea id="filtru-descriere" class="form-control" placeholder="Cuvinte cheie" minlength="<%= minDescLen %>" maxlength="<%= maxDescLen %>" style="height: 80px"></textarea>
+          <label for="filtru-descriere">Cuvinte cheie in descriere (intre <%= minDescLen %> si <%= maxDescLen %> caractere)</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ CHEI DE SORTARE (Bonus 8) ═══════════ -->
+    <div class="row g-3 mt-3 align-items-end">
+      <div class="col-12 col-md-6 col-lg-3">
+        <label for="sortare-cheie-1" class="form-label fw-bold"><i class="bi bi-list-ol"></i> Prima cheie de sortare:</label>
+        <select id="sortare-cheie-1" class="form-select">
+          <option value="pret" selected>Pret</option>
+          <option value="nume">Nume Produs</option>
+          <option value="nr-ingrediente">Numar specificatii / materiale</option>
+          <option value="luna">Luna adaugarii</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <label for="sortare-cheie-2" class="form-label fw-bold"><i class="bi bi-list-ol"></i> A doua cheie de sortare:</label>
+        <select id="sortare-cheie-2" class="form-select">
+          <option value="pret">Pret</option>
+          <option value="nume" selected>Nume Produs</option>
+          <option value="nr-ingrediente">Numar specificatii / materiale</option>
+          <option value="luna">Luna adaugarii</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ═══════════ BUTOANE Bootstrap ═══════════ -->
+    <div class="d-flex flex-wrap gap-2 mt-4 pt-3 border-top">
+      <button type="button" id="btn-filtreaza" class="btn btn-primary">
+        <i class="bi bi-funnel"></i> <span class="d-none d-md-inline">Filtreaza</span>
+      </button>
+      <button type="button" id="btn-sort-asc" class="btn btn-secondary">
+        <i class="bi bi-sort-numeric-up"></i> <span class="d-none d-md-inline">Sortare crescatoare</span>
+      </button>
+      <button type="button" id="btn-sort-desc" class="btn btn-secondary">
+        <i class="bi bi-sort-numeric-down"></i> <span class="d-none d-md-inline">Sortare descrescatoare</span>
+      </button>
+      <button type="button" id="btn-calculeaza" class="btn btn-success">
+        <i class="bi bi-calculator"></i> <span class="d-none d-md-inline">Calculeaza media</span>
+      </button>
+      <button type="button" id="btn-reseteaza" class="btn btn-danger ms-auto">
+        <i class="bi bi-arrow-counterclockwise"></i> <span class="d-none d-md-inline">Reseteaza</span>
+      </button>
+    </div>
+      <div class="form-check form-switch mt-3 d-inline-block p-2 rounded" style="background-color: #e9ecef; border: 1px solid #ced4da;">
+        <input class="form-check-input ms-0 me-2" type="checkbox" id="toggle-server-side" style="margin-top: 0.25rem;">
+        <label class="form-check-label text-primary fw-bold" for="toggle-server-side">
+          <i class="bi bi-cloud-arrow-down"></i> Activeaza Filtrare Server-Side (Bonus 10)
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ ZONA PRODUSE ═══════════ -->
+  <section class="zona-produse" id="zona-produse">
+    <% if (typeof produse !== 'undefined' && produse.length) { %>
+      <% produse.forEach(function (produs) { %>
+        <%- include('../fragmente/produs_card', { produs: produs }) %>
+      <% }); %>
+    <% } else { %>
+      <div class="produse-lipsa">
+        <i class="fas fa-box-open fa-3x"></i>
+        <p>Nu exista produse disponibile in aceasta categorie.</p>
+      </div>
+    <% } %>
+    
+    <div id="mesaj-lipsa-produse" class="produse-lipsa" style="display: none;">
+      <i class="fas fa-search fa-3x"></i>
+      <p>Nu exista produse conform filtrarii curente.</p>
+    </div>
+
+    <!-- Container Paginare -->
+    <nav aria-label="Navigare produse" class="mt-4">
+      <ul class="pagination justify-content-center" id="pagination-container">
+        <!-- Generat dinamic in JS -->
+      </ul>
+    </nav>
+  </section>
+
+  <!-- ═══════════ MODAL BONUS 11 ═══════════ -->
+  <div class="modal fade" id="modalProdus" tabindex="-1" aria-labelledby="modalProdusLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content" style="border: none; border-radius: 1rem; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+        <div class="modal-header" style="background-color: var(--culoare-primara, #2c3e50); color: white; border-bottom: none;">
+          <h5 class="modal-title fw-bold" id="modalProdusLabel">Detalii Produs</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0" style="background-color: var(--culoare-background-inchis, #f8f9fa);">
+          <!-- Continut injectat via JS -->
+          <div class="row g-0">
+            <div class="col-md-5 bg-white d-flex align-items-center justify-content-center p-3">
+              <img id="modalImagine" src="" class="img-fluid rounded" alt="Imagine produs" style="max-height: 400px; object-fit: contain;">
+            </div>
+            <div class="col-md-7 p-4">
+              <h3 id="modalNume" class="fw-bold mb-3" style="color: var(--culoare-text, #333);"></h3>
+              <p class="badge bg-primary fs-6 mb-3" id="modalCategorie"></p>
+              <h4 class="text-success fw-bold mb-4" id="modalPret"></h4>
+              <p id="modalDescriere" style="line-height: 1.6; color: var(--culoare-text, #555);"></p>
+              <hr>
+              <ul class="list-unstyled" style="color: var(--culoare-text, #555);">
+                <li class="mb-2"><i class="fas fa-palette me-2 text-primary"></i> <strong>Culoare:</strong> <span id="modalCuloare"></span></li>
+                <li class="mb-2"><i class="fas fa-industry me-2 text-primary"></i> <strong>Producator:</strong> <span id="modalProducator"></span></li>
+                <li class="mb-2"><i class="fas fa-cubes me-2 text-primary"></i> <strong>Materiale:</strong> <span id="modalMateriale"></span></li>
+                <li class="mb-2"><i class="fas fa-truck text-primary me-2"></i> <strong>Livrare posta:</strong> <span id="modalLivrare"></span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="background-color: var(--culoare-background, #fff); border-top: 1px solid rgba(0,0,0,0.05);">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Inchide</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<%- include('../fragmente/footer') %>
+<script src="/resurse/js/produse.js"></script>
+</body>
+</html>

@@ -57,8 +57,8 @@ $timp_total: 21s;
   }
   19.047619047619047% {
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
-    transform: rotate(-90deg) translate(-50%, 0);
-    opacity: 0;
+    transform: rotate(90deg) translate(0, 0);
+    opacity: 1;
   }
   19.04861904761905%, 100% {
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
